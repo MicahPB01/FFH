@@ -4,7 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3584d4fa-6646-4ec1-8080-044ce5ecaf8c" name="Changes" comment="" />
+    <list default="true" id="3584d4fa-6646-4ec1-8080-044ce5ecaf8c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/BotMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/BotMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Add/GeneralInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Add/GeneralInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Add/ObtainProfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Add/ObtainProfile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/CommandHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Create.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Create.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Edit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Edit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Help.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Help.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Ping.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Ping.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/MessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/MessageListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/UserProfileSetupState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/UserProfileSetupState.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,8 +30,18 @@
       <ProjectState />
     </projectState>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2ZdbsBIAV3zWvNh7pngr9ccrSJI" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -27,9 +52,38 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="org.DiscordBot" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="BotMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.DiscordBot.BotMain" />
+      <module name="DiscordBot.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.DiscordBot.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.BotMain" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
