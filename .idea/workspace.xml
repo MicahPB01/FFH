@@ -4,20 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3584d4fa-6646-4ec1-8080-044ce5ecaf8c" name="Changes" comment="Created profiles">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Psych/Cured.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Psych/GiveUp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Psych/PsychGameState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Psych/PsychJoin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Psych/PsychStart.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Question.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Smile.java" afterDir="false" />
+    <list default="true" id="3584d4fa-6646-4ec1-8080-044ce5ecaf8c" name="Changes" comment="Added Psych Game">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/BotMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/BotMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Add/ObtainProfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Add/ObtainProfile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/CommandHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Database.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,11 +89,26 @@
       <option name="project" value="LOCAL" />
       <updated>1702792148267</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added Psych Game">
+      <created>1702802545602</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1702802545602</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Added Psych Game">
+      <created>1702802738088</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1702802738088</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Created profiles" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created profiles" />
+    <MESSAGE value="Added Psych Game" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Psych Game" />
   </component>
 </project>
