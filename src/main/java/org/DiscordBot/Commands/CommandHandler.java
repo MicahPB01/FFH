@@ -2,8 +2,11 @@ package org.DiscordBot.Commands;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.DiscordBot.Command;
+import org.DiscordBot.Commands.Activities.Psych.*;
 import org.DiscordBot.Commands.Add.GeneralInfo;
 import org.DiscordBot.Commands.Add.ObtainProfile;
+import org.DiscordBot.Commands.Activities.Question;
+import org.DiscordBot.Commands.Activities.Smile;
 import org.DiscordBot.MessageListener;
 
 import java.util.HashMap;
@@ -12,6 +15,9 @@ import java.util.Map;
 public class CommandHandler {
     private final Map<String, Command> commands = new HashMap<>();
     private MessageListener messageListener;
+    PsychGameState psychGameState = new PsychGameState();
+
+
 
 
 
@@ -21,6 +27,12 @@ public class CommandHandler {
         commands.put("help", new Help(commands));
         commands.put("addinfo", new GeneralInfo());
         commands.put("profile", new ObtainProfile());
+        commands.put("question", new Question());
+        commands.put("smile", new Smile());
+        commands.put("psych", new PsychJoin(psychGameState));
+        commands.put("psychstart", new PsychStart(psychGameState));
+        commands.put("giveup", new GiveUp(psychGameState));
+        commands.put("cured", new Cured(psychGameState));
     }
 
     public void handle(MessageReceivedEvent event) {

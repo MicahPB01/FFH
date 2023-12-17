@@ -43,18 +43,15 @@ public class ObtainProfile implements Command {
 
 
     private void displayUserProfile(MessageReceivedEvent event, String serverID, String userID) {
-        Connection connection = Database.getConnection();
-
         String sql = "SELECT * FROM `user_profiles` WHERE server_id = ? AND user_id = ?";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (Connection connection = Database.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
             preparedStatement.setString(1, serverID);
             preparedStatement.setString(2, userID);
 
-            //System.out.println(preparedStatement);
-
             ResultSet resultSet = preparedStatement.executeQuery();
-
 
             if (resultSet.next()) {
                 EmbedBuilder embed = new EmbedBuilder();
@@ -68,12 +65,12 @@ public class ObtainProfile implements Command {
                 }
 
                 String almaMater = resultSet.getString("alma_mater");
-                if(almaMater != null)   {
+                if (almaMater != null) {
                     embed.addField("Alma Mater", almaMater, false);
                 }
 
                 String contact = resultSet.getString("contact");
-                if(contact != null)   {
+                if (contact != null) {
                     embed.addField("Contact Info", contact, false);
                 }
 
@@ -83,9 +80,9 @@ public class ObtainProfile implements Command {
                     embed.addField("Birthday", birthday, false);
                 }
 
-                String sociaMedia = resultSet.getString("social_media");
-                if (sociaMedia != null) {
-                    embed.addField("Social Media", sociaMedia, false);
+                String socialMedia = resultSet.getString("social_media");
+                if (socialMedia != null) {
+                    embed.addField("Social Media", socialMedia, false);
                 }
 
                 String generalInfo = resultSet.getString("general_info");
@@ -95,18 +92,13 @@ public class ObtainProfile implements Command {
 
                 byte[] photoData = resultSet.getBytes("photo");
                 File tempFile;
-                if(photoData != null)   {
+                if (photoData != null) {
                     tempFile = File.createTempFile("profile_photo", ".jpg");
                     Files.write(tempFile.toPath(), photoData);
+                    embed.setImage("attachment://" + tempFile.getName());
                 } else {
                     tempFile = null;
                 }
-
-                if(tempFile != null)   {
-                    embed.setImage("attachment://" + tempFile.getName());
-                }
-
-
 
                 if (tempFile != null) {
                     event.getChannel().sendMessageEmbeds(embed.build()).addFiles(FileUpload.fromData(tempFile)).queue(
@@ -123,4 +115,5 @@ public class ObtainProfile implements Command {
             // Handle exceptions
         }
     }
+
 }
