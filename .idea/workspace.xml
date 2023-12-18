@@ -5,9 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3584d4fa-6646-4ec1-8080-044ce5ecaf8c" name="Changes" comment="Added Psych Game">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/BotMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/BotMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Psych/Cured.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Psych/Cured.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Psych/GiveUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Psych/GiveUp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Psych/PsychJoin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Psych/PsychJoin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Psych/PsychStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Psych/PsychStart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Question.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Question.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Smile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Smile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Add/GeneralInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Add/ObtainProfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Add/ObtainProfile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/CommandHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Create.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Create.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Edit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Edit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Help.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Help.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Ping.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Ping.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/MessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/MessageListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,16 +53,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="org.DiscordBot" />

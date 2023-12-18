@@ -33,4 +33,9 @@ public class PsychStart implements Command {
         event.getChannel().sendMessage("The Psychiatrist game has started!").queue();
 
     }
+
+    @Override
+    public String getDescription() {
+        return "Starts the Psychiatrist game. There must be at least two people registered to play.";
+    }
 }

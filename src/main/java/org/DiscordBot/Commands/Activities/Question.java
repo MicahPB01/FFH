@@ -287,6 +287,11 @@ public class Question implements Command {
 
     }
 
+    @Override
+    public String getDescription() {
+        return "Presents a random question to spark conversation.";
+    }
+
     private void resetQuestions(List<String> questions)   {
         List<String> shuffled = new LinkedList<>(questions);
         Collections.shuffle(shuffled);

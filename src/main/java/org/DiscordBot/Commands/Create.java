@@ -35,4 +35,9 @@ public class Create implements Command {
             event.getChannel().sendMessage("This command can only be used in server channels.").queue();
         }
     }
+
+    @Override
+    public String getDescription() {
+        return "Used to create a profile. If one is already created, it will replace what is currently there.";
+    }
 }

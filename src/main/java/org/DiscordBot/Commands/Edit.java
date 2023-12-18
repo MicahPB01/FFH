@@ -40,6 +40,11 @@ public class Edit implements Command {
         }
     }
 
+    @Override
+    public String getDescription() {
+        return "Used to edit your profile. You will DMed by the bot and will react to one of the options to change a specific field.";
+    }
+
     private void sendEditableFieldEmbed(PrivateChannel channel, String title, String description, String reactionEmoji, long userId, String state) {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setTitle(title);

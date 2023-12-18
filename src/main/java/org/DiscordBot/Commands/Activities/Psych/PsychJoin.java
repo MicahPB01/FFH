@@ -23,4 +23,9 @@ public class PsychJoin implements Command {
 
         event.getChannel().sendMessage(event.getAuthor().getAsMention() + " has joined the Psychiatrist game.").queue();
     }
+
+    @Override
+    public String getDescription() {
+        return "This command registers you to play in the Psychiatrist game.";
+    }
 }

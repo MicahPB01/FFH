@@ -3,7 +3,6 @@ package org.DiscordBot.Commands;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.DiscordBot.Command;
 import org.DiscordBot.Commands.Activities.Psych.*;
-import org.DiscordBot.Commands.Add.GeneralInfo;
 import org.DiscordBot.Commands.Add.ObtainProfile;
 import org.DiscordBot.Commands.Activities.Question;
 import org.DiscordBot.Commands.Activities.Smile;
@@ -25,7 +24,6 @@ public class CommandHandler {
     public CommandHandler()   {
         commands.put("ping", new Ping());
         commands.put("help", new Help(commands));
-        commands.put("addinfo", new GeneralInfo());
         commands.put("profile", new ObtainProfile());
         commands.put("question", new Question());
         commands.put("smile", new Smile());

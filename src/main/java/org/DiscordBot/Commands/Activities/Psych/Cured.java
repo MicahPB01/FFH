@@ -26,4 +26,9 @@ public class Cured implements Command {
         gameState.endGame();
         event.getChannel().sendMessage("The Psychiatrist has declared the game cured!").queue();
     }
+
+    @Override
+    public String getDescription() {
+        return "This is used by the Psychiatrist when they properly diagnose the patients. This will end the game with a victory.";
+    }
 }

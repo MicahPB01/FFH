@@ -76,7 +76,7 @@ public class MessageListener extends ListenerAdapter {
                 case ALMA_MATER:
                     saveAlmaMater(userID, serverID, message);
                     userStates.put(Long.valueOf(userID), UserProfileSetupState.CONTACT_INFO);
-                    event.getChannel().sendMessage("Awesome, add some ways to contact you?").queue();
+                    event.getChannel().sendMessage("Awesome, add some ways to contact you? One way at a time please. Type \"Done\" when finished").queue();
                     break;
 
                 case CONTACT_INFO:
@@ -98,7 +98,7 @@ public class MessageListener extends ListenerAdapter {
                 case BIRTHDAY:
                     saveBirthday(userID, serverID, message);
                     userStates.put(Long.valueOf(userID), UserProfileSetupState.SOCIAL_MEDIA);
-                    event.getChannel().sendMessage("Got it, now, please consider entering some social media handles! Ex. Instagram: Handle").queue();
+                    event.getChannel().sendMessage("Got it, now, please consider entering some social media handles! Ex. Instagram: Handle. One way at a time please. Type \"Done\" when finished").queue();
                     break;
 
                 case SOCIAL_MEDIA:

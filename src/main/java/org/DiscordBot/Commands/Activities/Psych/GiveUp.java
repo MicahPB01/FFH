@@ -27,4 +27,9 @@ public class GiveUp implements Command {
         gameState.endGame();
         event.getChannel().sendMessage("The Psychiatrist has given up. The condition was: " + gameState.getCondition()).queue();
     }
+
+    @Override
+    public String getDescription() {
+        return "Only used by the Psychiatrist. This will end the game with the Psychiatrist losing.";
+    }
 }

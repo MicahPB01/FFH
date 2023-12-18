@@ -9,7 +9,7 @@ public class BotMain {
     public static void main(String[] args) {
         try {
             // Replace "your-bot-token" with your actual bot token
-            JDA jda = JDABuilder.createDefault("MTE4NTY2NTM0MDM3MDMyOTc4MA.GHUK2G.fGb5rKF6_izrQ9foh6B2PV5ThpP3_xjtZtiygs")
+            JDA jda = JDABuilder.createDefault("MTE4NTY2NTM0MDM3MDMyOTc4MA.GSBrJJ.mtDF4fQk7spKTyuwFnzZFINHrJOqKofZJmWNqs")
                     .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
                     .setActivity(Activity.customStatus("As always, Go Huskies!"))
                     .addEventListeners(new MessageListener())
@@ -22,4 +22,6 @@ public class BotMain {
             e.printStackTrace();
         }
     }
+
+
 }

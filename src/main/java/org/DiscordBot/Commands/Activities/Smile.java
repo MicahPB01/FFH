@@ -42,4 +42,12 @@ public class Smile implements Command {
 
 
     }
+
+    @Override
+    public String getDescription() {
+        return "Presents a top post from r/MadeMeSmile.";
+    }
+
+
+
 }

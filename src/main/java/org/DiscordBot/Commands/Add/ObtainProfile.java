@@ -41,6 +41,11 @@ public class ObtainProfile implements Command {
         displayUserProfile(event, serverID, userID);
     }
 
+    @Override
+    public String getDescription() {
+        return "Used to display a profile. You can use it with just \"!profile\" to see your profile or tag someone with it \"!profile @example\" to pull up someone else's profile.";
+    }
+
 
     private void displayUserProfile(MessageReceivedEvent event, String serverID, String userID) {
         String sql = "SELECT * FROM `user_profiles` WHERE server_id = ? AND user_id = ?";

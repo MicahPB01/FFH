@@ -10,6 +10,10 @@ public class Ping implements Command {
         event.getChannel().sendMessage("Pong!").queue();
     }
 
+    @Override
+    public String getDescription() {
+        return "Responds with Pong! to check if the bot is active.";
+    }
 
 
 }
