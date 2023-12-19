@@ -1,12 +1,22 @@
 package org.DiscordBot.Commands;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.DiscordBot.Command;
 import org.DiscordBot.Commands.Activities.Psych.*;
+import org.DiscordBot.Commands.Activities.Youtube.Skip;
+import org.DiscordBot.Commands.Activities.Youtube.Stop;
+import org.DiscordBot.Commands.Activities.Youtube.Volume;
+import org.DiscordBot.Commands.Activities.Youtube.Youtube;
 import org.DiscordBot.Commands.Add.ObtainProfile;
 import org.DiscordBot.Commands.Activities.Question;
 import org.DiscordBot.Commands.Activities.Smile;
 import org.DiscordBot.MessageListener;
+
+
+
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +26,8 @@ public class CommandHandler {
     private MessageListener messageListener;
     PsychGameState psychGameState = new PsychGameState();
 
+
+    AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
 
 
 
@@ -31,6 +43,10 @@ public class CommandHandler {
         commands.put("psychstart", new PsychStart(psychGameState));
         commands.put("giveup", new GiveUp(psychGameState));
         commands.put("cured", new Cured(psychGameState));
+        commands.put("audio", new Youtube(playerManager));
+        commands.put("volume", new Volume());
+        commands.put("stop", new Stop());
+        commands.put("skip", new Skip());
     }
 
     public void handle(MessageReceivedEvent event) {
