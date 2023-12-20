@@ -1,13 +1,12 @@
 package org.DiscordBot;
 
-import com.mysql.cj.jdbc.ConnectionImpl;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.channel.*;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.DiscordBot.Commands.Add.UserProfileSetupState;
 import org.DiscordBot.Commands.CommandHandler;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
-import net.dv8tion.jda.api.entities.Message.Attachment;
 
 
 import java.io.File;

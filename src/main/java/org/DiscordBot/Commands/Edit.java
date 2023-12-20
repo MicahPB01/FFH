@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.DiscordBot.Command;
 import org.DiscordBot.MessageListener;
-import org.DiscordBot.UserProfileSetupState;
+import org.DiscordBot.Commands.Add.UserProfileSetupState;
 
 public class Edit implements Command {
     private final MessageListener messageListener;

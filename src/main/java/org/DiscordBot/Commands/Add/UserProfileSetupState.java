@@ -1,4 +1,4 @@
-package org.DiscordBot;
+package org.DiscordBot.Commands.Add;
 
 public enum UserProfileSetupState {
     NICKNAME,

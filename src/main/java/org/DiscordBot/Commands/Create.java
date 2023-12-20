@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.entities.channel.ChannelType;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.DiscordBot.Command;
 import org.DiscordBot.MessageListener;
-import org.DiscordBot.UserProfileSetupState;
+import org.DiscordBot.Commands.Add.UserProfileSetupState;
 
 public class Create implements Command {
     private MessageListener messageListener;
