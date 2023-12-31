@@ -3,6 +3,9 @@ package org.panther.Commands;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -10,9 +13,16 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class CommandHandler extends ListenerAdapter {
 
@@ -39,6 +49,13 @@ public class CommandHandler extends ListenerAdapter {
                 handleScore(event);
                 break;
             // Add cases for other commands
+            case "stats":
+                try {
+                    handleStats(event);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
             default:
                 event.reply("Unknown command").setEphemeral(true).queue();
                 break;
@@ -59,7 +76,15 @@ public class CommandHandler extends ListenerAdapter {
 
 
     private void handleScore(SlashCommandInteractionEvent event)   {
-        String[] gameInfo = findScore(event);
+
+        String date = null;
+
+        if (event.getOption("date") != null) {
+            date = Objects.requireNonNull(event.getOption("date")).getAsString();
+            // Now dateString contains the date argument provided by the user
+        }
+
+        String[] gameInfo = findScore(event, date);
 
         if(gameInfo == null)   {
             event.reply("No Game Today").queue();
@@ -84,17 +109,23 @@ public class CommandHandler extends ListenerAdapter {
     }
 
 
-    private String[] findScore(SlashCommandInteractionEvent event)   {
+    private String[] findScore(SlashCommandInteractionEvent event, String date)   {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         String[] gameInfo = new String[4];
 
         LocalDateTime now = LocalDateTime.now();
-        System.out.println(dateTimeFormatter.format(now));
+        String currentDate = (dateTimeFormatter.format(now));
+
+        if(date != null)   {
+            currentDate = date.replaceAll("/", "");
+        }
 
 
-        String url = "https://moneypuck.com/moneypuck/dates/" + dateTimeFormatter.format(now) + ".htm";
+        String url = "https://moneypuck.com/moneypuck/dates/" + currentDate + ".htm";
 
         System.out.println(url);
+
+
 
 
 
@@ -125,7 +156,7 @@ public class CommandHandler extends ListenerAdapter {
 
                     System.out.println(score);
 
-                    String date = row.select("h4").text(); // Assuming date is in an h4 tag
+                    date = row.select("h4").text(); // Assuming date is in an h4 tag
 
                     gameInfo[3] = date;
                     
@@ -140,6 +171,77 @@ public class CommandHandler extends ListenerAdapter {
         }
 
     }
+
+    public void handleStats(SlashCommandInteractionEvent event) throws IOException {
+        String playerName = Objects.requireNonNull(event.getOption("player")).getAsString();
+        CSVRecord foundRecord = null;
+
+
+        URL url = new URL("https://moneypuck.com/moneypuck/playerData/seasonSummary/2023/regular/teams/skaters/FLA.csv");
+        URLConnection connection = url.openConnection();
+
+        CSVFormat csvFormat = CSVFormat.DEFAULT
+                .builder()
+                .setSkipHeaderRecord(true)
+                .setHeader()
+                .setIgnoreHeaderCase(true)
+                .setTrim(true)
+                .build();
+
+        try(BufferedReader reader = new BufferedReader(
+                new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8)))   {
+            CSVParser parser = new CSVParser(reader, csvFormat);
+
+            for(CSVRecord record : parser)   {
+                String playerColumnValue = record.get("name");
+                String allColumnValue = record.get("situation");
+
+                if(playerColumnValue.equalsIgnoreCase(playerName) && "all".equalsIgnoreCase(allColumnValue))   {
+                    foundRecord = record;
+                }
+            }
+
+        }
+        catch(IOException e )   {
+            e.printStackTrace();
+        }
+
+        if(foundRecord != null)   {
+            System.out.println("Found stats for " + playerName);
+
+
+            String columnA = foundRecord.get("playerId"); // Replace "A" with the actual header name for column A
+            int columnG = Integer.parseInt(foundRecord.get("games_played")); // Replace "G" with the actual header name for column G
+            int columnI = (int) Double.parseDouble(foundRecord.get("shifts")); // Replace "I" with the actual header name for column I
+            int columnAB = (int) Double.parseDouble(foundRecord.get("I_F_primaryAssists")); // Replace "AB" with the actual header name for column AB
+            int columnAC = (int) Double.parseDouble(foundRecord.get("I_F_secondaryAssists")); // Replace "AC" with the actual header name for column AC
+            int columnAI = (int) Double.parseDouble(foundRecord.get("I_F_goals")); // Replace "AI" with the actual header name for column AI
+
+
+            EmbedBuilder embedBuilder = new EmbedBuilder();
+
+            embedBuilder.setTitle(playerName);
+            embedBuilder.setColor(Color.RED);
+            embedBuilder.setThumbnail("https://assets.nhle.com/mugs/nhl/20232024/FLA/" + columnA + ".png"); // Set the image URL
+            embedBuilder.addField("Goals: " , String.valueOf(columnAI), true);
+            embedBuilder.addField("Assists: ", String.valueOf((columnAC + columnAB)), true);
+
+            embedBuilder.addField("Games Played: ", String.valueOf(columnG), true);
+            embedBuilder.addField("Number of shifts: " , String.valueOf(columnI), true);
+            embedBuilder.setFooter("Player Information", null);
+            embedBuilder.setTimestamp(LocalDateTime.now());
+            event.replyEmbeds(embedBuilder.build()).queue();
+
+        }
+
+
+
+
+
+    }
+
+
+
 
 
 

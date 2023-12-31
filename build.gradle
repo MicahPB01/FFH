@@ -21,6 +21,7 @@ dependencies {
     implementation 'org.json:json:20210307' // Check for the latest version
     implementation 'com.sedmelluq:lavaplayer:1.3.77' // Replace with the latest version
     implementation 'org.jsoup:jsoup:1.13.1'
+    implementation 'org.apache.commons:commons-csv:1.9.0'
 
 }
 
