@@ -13,6 +13,7 @@ public class Skip implements Command {
         event.getChannel().sendMessage("Skipping current track!").queue();
     }
 
+
     @Override
     public String getDescription() {
         return "Skips the current song and moves to the next one in the queue";

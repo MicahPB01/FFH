@@ -44,6 +44,7 @@ public class Youtube implements Command {
             return;
         }
 
+
         AudioManager audioManager = event.getGuild().getAudioManager();
         if (!audioManager.isConnected()) {
             audioManager.openAudioConnection(voiceState.getChannel());

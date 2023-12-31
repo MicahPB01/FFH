@@ -36,6 +36,7 @@ public class PsychStart implements Command {
 
     @Override
     public String getDescription() {
-        return "Starts the Psychiatrist game. There must be at least two people registered to play.";
+        return "Starts the Psychiatrist game. There must be at least tw" +
+                "o people registered to play.";
     }
 }

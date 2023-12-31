@@ -30,3 +30,4 @@ public class Help implements Command {
         return "Displays a list of available commands and their descriptions.";
     }
 }
+

@@ -20,6 +20,7 @@ public class Volume implements Command {
         if(volume > 150 || volume < 0)   {
             event.getChannel().sendMessage("Volume level should be between 0 and 150").queue();
             return;
+
         }
 
         GuildMusicManager musicManager = PlayerManager.getINSTANCE().getMusicManager(event.getGuild());

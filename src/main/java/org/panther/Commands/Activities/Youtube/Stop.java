@@ -17,7 +17,8 @@ public class Stop implements Command {
 
         event.getChannel().sendMessage("Playback has been stopped and the queue has been cleared").queue();
 
-        AudioManager audioManager = event.getGuild().getAudioManager();
+        AudioManager audioManager =
+                event.getGuild().getAudioManager();
 
         audioManager.closeAudioConnection();
 

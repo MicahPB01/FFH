@@ -26,6 +26,7 @@ public class PsychJoin implements Command {
 
     @Override
     public String getDescription() {
-        return "This command registers you to play in the Psychiatrist game.";
+        return "This command registers you to play in the Psychiatrist game." +
+                "";
     }
 }

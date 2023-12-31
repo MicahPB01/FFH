@@ -30,6 +30,7 @@ public class GiveUp implements Command {
 
     @Override
     public String getDescription() {
-        return "Only used by the Psychiatrist. This will end the game with the Psychiatrist losing.";
+        return "Only used by the Psychiatrist. This will end the game with the Psychiatrist losing." +
+                "";
     }
 }

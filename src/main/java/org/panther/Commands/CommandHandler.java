@@ -83,6 +83,7 @@ public class CommandHandler extends ListenerAdapter {
         
     }
 
+
     private String[] findScore(SlashCommandInteractionEvent event)   {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         String[] gameInfo = new String[4];

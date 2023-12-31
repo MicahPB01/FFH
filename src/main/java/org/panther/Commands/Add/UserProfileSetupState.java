@@ -17,4 +17,5 @@ public enum UserProfileSetupState {
     EDIT_CONTACT_INFO,
     EDIT_PHOTO
 
+
 }

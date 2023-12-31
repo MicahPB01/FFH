@@ -24,6 +24,7 @@ public class MessageListener extends ListenerAdapter {
 
 
 
+
     private final Map<Long, UserProfileSetupState> userStates = new HashMap<>();
     private final Map<Long, Long> userServerMap = new HashMap<>();
 

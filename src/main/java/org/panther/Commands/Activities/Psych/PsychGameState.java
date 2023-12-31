@@ -28,6 +28,7 @@ public class PsychGameState {
             "Imitate a famous singer.",
             "Act like a historical figure.",
             "Pretend you're a detective.",
+
             "Talk like a news reporter.",
             "Answer as if you're a grandparent.",
             "Speak with exaggerated politeness.",

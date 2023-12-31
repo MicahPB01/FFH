@@ -39,6 +39,7 @@ public class Edit implements Command {
         }
     }
 
+
     @Override
     public String getDescription() {
         return "Used to edit your profile. You will DMed by the bot and will react to one of the options to change a specific field.";

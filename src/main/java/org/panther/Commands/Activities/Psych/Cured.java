@@ -29,6 +29,7 @@ public class Cured implements Command {
 
     @Override
     public String getDescription() {
-        return "This is used by the Psychiatrist when they properly diagnose the patients. This will end the game with a victory.";
+        return "This is used by the Psyc" +
+                "hiatrist when they properly diagnose the patients. This will end the game with a victory.";
     }
 }

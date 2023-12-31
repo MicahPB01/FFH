@@ -35,6 +35,7 @@ public class Create implements Command {
         }
     }
 
+
     @Override
     public String getDescription() {
         return "Used to create a profile. If one is already created, it will replace what is currently there.";
