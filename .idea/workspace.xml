@@ -6,11 +6,33 @@
   <component name="ChangeListManager">
     <list default="true" id="3584d4fa-6646-4ec1-8080-044ce5ecaf8c" name="Changes" comment="Added youtube audio playback functionality">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/BotMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/BotMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Create.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Create.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Edit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Edit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/MessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/MessageListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/UserProfileSetupState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Add/UserProfileSetupState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/BotMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/BotMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Psych/Cured.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Psych/Cured.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Psych/GiveUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Psych/GiveUp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Psych/PsychGameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Psych/PsychGameState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Psych/PsychJoin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Psych/PsychJoin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Psych/PsychStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Psych/PsychStart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Question.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Question.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Smile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Smile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Youtube/PlaybackHandlers/AudioPlayerSendHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Youtube/PlaybackHandlers/AudioPlayerSendHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Youtube/PlaybackHandlers/GuildMusicManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Youtube/PlaybackHandlers/GuildMusicManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Youtube/PlaybackHandlers/PlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Youtube/PlaybackHandlers/PlayerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Youtube/PlaybackHandlers/TrackScheduler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Youtube/PlaybackHandlers/TrackScheduler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Youtube/Skip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Youtube/Skip.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Youtube/Stop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Youtube/Stop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Youtube/Volume.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Youtube/Volume.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Activities/Youtube/Youtube.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Youtube/Youtube.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Add/ObtainProfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Add/ObtainProfile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Add/UserProfileSetupState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Add/UserProfileSetupState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/CommandHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Create.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Create.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Edit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Edit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Help.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Help.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Commands/Ping.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Ping.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/DiscordBot/MessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/MessageListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,11 +80,11 @@
   </component>
   <component name="RunManager">
     <configuration name="BotMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.DiscordBot.BotMain" />
+      <option name="MAIN_CLASS_NAME" value="org.panther.BotMain" />
       <module name="DiscordBot.main" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.DiscordBot.Commands.Add.*" />
+          <option name="PATTERN" value="org.panther.Commands.Add.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
