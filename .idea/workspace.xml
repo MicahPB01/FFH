@@ -5,10 +5,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3584d4fa-6646-4ec1-8080-044ce5ecaf8c" name="Changes" comment="Added score command">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/panther/Automation/GameChecker.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Score/GameInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Score/Score.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/panther/Utilities/DateTimeUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/panther/Utilities/GameBuilderUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/BotMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/BotMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Psych/Cured.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Psych/GiveUp.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Psych/PsychGameState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Psych/PsychJoin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Psych/PsychStart.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Question.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Smile.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Youtube/PlaybackHandlers/AudioPlayerSendHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Youtube/PlaybackHandlers/GuildMusicManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Youtube/PlaybackHandlers/PlayerManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Youtube/PlaybackHandlers/TrackScheduler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Youtube/Skip.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Youtube/Stop.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Youtube/Volume.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Activities/Youtube/Youtube.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Add/ObtainProfile.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Add/UserProfileSetupState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Command.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/CommandHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Create.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Edit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Help.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Ping.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/MessageListener.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +50,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>

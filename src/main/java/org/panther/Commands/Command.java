@@ -1,10 +1,9 @@
 package org.panther.Commands;
 
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
 public interface Command {
-    void execute(MessageReceivedEvent event, String[] args);
 
-    String getDescription();
+    void execute(SlashCommandInteractionEvent event);
+
 }
-

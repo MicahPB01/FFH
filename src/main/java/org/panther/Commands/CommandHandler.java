@@ -11,6 +11,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.panther.Commands.Score.Score;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -23,6 +24,8 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CommandHandler extends ListenerAdapter {
 
@@ -39,14 +42,14 @@ public class CommandHandler extends ListenerAdapter {
         System.out.println("Command");
 
         switch (commandName) {
-            case "ping":
+            case "ping":  
                 handlePing(event);
                 break;
             case "profile":
                 handleHelp(event);
                 break;
             case "score":
-                handleScore(event);
+                new Score().execute(event);
                 break;
             // Add cases for other commands
             case "stats":
@@ -56,6 +59,8 @@ public class CommandHandler extends ListenerAdapter {
                     throw new RuntimeException(e);
                 }
                 break;
+
+
             default:
                 event.reply("Unknown command").setEphemeral(true).queue();
                 break;
@@ -75,43 +80,12 @@ public class CommandHandler extends ListenerAdapter {
 
 
 
-    private void handleScore(SlashCommandInteractionEvent event)   {
 
-        String date = null;
-
-        if (event.getOption("date") != null) {
-            date = Objects.requireNonNull(event.getOption("date")).getAsString();
-            // Now dateString contains the date argument provided by the user
-        }
-
-        String[] gameInfo = findScore(event, date);
-
-        if(gameInfo == null)   {
-            event.reply("No Game Today").queue();
-            return;
-        }
-
-        EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setTitle("Game Details");
-        embedBuilder.addField("Home: ", gameInfo[0], true);
-        embedBuilder.addField("Away: " , gameInfo[1], true);
-        embedBuilder.addField("Score: ", gameInfo[2], false);
-        embedBuilder.addField("Date: ", gameInfo[3], true);
-        embedBuilder.setColor(Color.red);
-        embedBuilder.setFooter("Game Information", null);
-        embedBuilder.setTimestamp(Instant.now());
-        event.replyEmbeds(embedBuilder.build()).queue();
-
-
-
-
-        
-    }
 
 
     private String[] findScore(SlashCommandInteractionEvent event, String date)   {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        String[] gameInfo = new String[4];
+        String[] gameInfo = new String[6];
 
         LocalDateTime now = LocalDateTime.now();
         String currentDate = (dateTimeFormatter.format(now));
@@ -139,18 +113,28 @@ public class CommandHandler extends ListenerAdapter {
 
                 String team1 = teamLogos.get(0).attr("alt");
                 String team2 = teamLogos.get(1).attr("alt");
-                
+
                 gameInfo[0] = team1;
                 gameInfo[1] = team2;
+                gameInfo[4] = teamLogos.get(0).attr("src");
+                gameInfo[5] = teamLogos.get(1).attr("src");
 
                 if (team1.contains("FLORIDA PANTHERS") || team2.contains("FLORIDA PANTHERS")) {
                     String opponent = team1.contains("FLORIDA PANTHERS") ? team2 : team1;
 
                     String score;
 
+
+
                     Elements oddsAndScores = row.select("h2");
                     Element secondH2 = oddsAndScores.get(1);
                     score = secondH2.text();
+
+                    if(score.contains("%"))   {
+                        score = row.select("h3").text(); //grabbing date instead
+                        score = score.replace(" Preview", "");
+                    }
+
                     gameInfo[2] = score;
 
 
@@ -159,7 +143,7 @@ public class CommandHandler extends ListenerAdapter {
                     date = row.select("h4").text(); // Assuming date is in an h4 tag
 
                     gameInfo[3] = date;
-                    
+
 
                     return gameInfo;
                 }
