@@ -90,6 +90,17 @@ public class GameBuilderUtils {
 
     }
 
+    public static String determineOpponent(GameInfo currentGame)   {
+
+        if (currentGame.getHomeTeam().contains("FLORIDA")) {
+            return currentGame.getAwayTeam();
+        }
+        else   {
+            return currentGame.getHomeTeam();
+        }
+
+    }
+
 
 
 }

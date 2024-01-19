@@ -59,8 +59,8 @@ public class GameChecker {
 
     private void checkForGame() {
 
-        //String currentDate = DateTimeUtils.dateFromCurrentDay();
-        String currentDate = "20240104";
+        String currentDate = DateTimeUtils.dateFromCurrentDay();
+        //String currentDate = "20240104";
         String url = GameBuilderUtils.findUrl(currentDate);
         Document webScrape = GameBuilderUtils.getWebsiteForScrape(url);
 
@@ -85,7 +85,7 @@ public class GameChecker {
 
     private void createGameDayThread(GameInfo currentGame) throws InterruptedException {
 
-        TextChannel channel = jda.getTextChannelById("1190095971107995708");
+        TextChannel channel = jda.getTextChannelById("1197806332661731428");
         ForumChannel forumChannel = jda.getForumChannelById("1191530176958447656");
 
         createThreadChannel(channel, currentGame);
@@ -119,23 +119,14 @@ public class GameChecker {
 
     private String buildThreadName(GameInfo currentGame)   {
 
-        String opponent = determineOpponent(currentGame);
+        String opponent = GameBuilderUtils.determineOpponent(currentGame);
 
         return opponent + " | " + currentGame.getTime() + " | " + DateTimeUtils.reverseDate(currentGame.getDate());
 
 
     }
 
-    private String determineOpponent(GameInfo currentGame)   {
 
-        if (currentGame.getHomeTeam().contains("FLORIDA")) {
-            return currentGame.getAwayTeam();
-        }
-        else   {
-            return currentGame.getHomeTeam();
-        }
-
-    }
 
     private void createForumPost(ForumChannel forumChannel, String threadName)   {
 

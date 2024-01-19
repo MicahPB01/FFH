@@ -44,7 +44,7 @@ public class Score implements Command {
 
 
             if(currentGame.getScore() != null) {
-                embedBuilder.addField("Score: ", currentGame.getScore(), false);
+                embedBuilder.addField("Score: ", currentGame.getAwayTeam() + "      " + currentGame.getScore() + "      " + currentGame.getHomeTeam(), false);
             }
             else   {
                 embedBuilder.addField("Time: " , currentGame.getTime(), false);
