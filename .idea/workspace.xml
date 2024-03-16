@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3584d4fa-6646-4ec1-8080-044ce5ecaf8c" name="Changes" comment="Finished moving /stats to new API">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/panther/Utilities/DateTimeUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/panther/Utilities/GameBuilderUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/panther/Utilities/GameBuilderUtilsOld.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Automation/GameChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Automation/GameChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/CommandHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Score/Score.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Score/Score.java" afterDir="false" />
-    </list>
+    <list default="true" id="3584d4fa-6646-4ec1-8080-044ce5ecaf8c" name="Changes" comment="Adjusted GameBuilderUtils and GameChecker to use new API" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -282,7 +274,28 @@
       <option name="project" value="LOCAL" />
       <updated>1710558849650</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Adjusted GameBuilderUtils and GameChecker to use new API">
+      <created>1710565048229</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1710565048229</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Adjusted GameBuilderUtils and GameChecker to use new API">
+      <created>1710565075412</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1710565075412</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Adjusted GameBuilderUtils and GameChecker to use new API">
+      <created>1710565215813</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1710565215813</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -304,6 +317,7 @@
     <MESSAGE value="Added score command" />
     <MESSAGE value="Switching over to NHL api" />
     <MESSAGE value="Finished moving /stats to new API" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished moving /stats to new API" />
+    <MESSAGE value="Adjusted GameBuilderUtils and GameChecker to use new API" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adjusted GameBuilderUtils and GameChecker to use new API" />
   </component>
 </project>
