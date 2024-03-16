@@ -8,6 +8,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.jetbrains.annotations.NotNull;
 import org.panther.Commands.Score.Score;
+import org.panther.Commands.Votes.Votes;
 import org.panther.Database;
 
 import java.awt.*;
@@ -44,7 +45,7 @@ public class CommandHandler extends ListenerAdapter {
             case "profile" -> handleHelp(event);
             case "score" -> new Score().execute(event);
             //case "stars" -> handVoteStars(event);
-            case "vote" ->handVoteStars(event);
+            case "vote" -> Votes.handleVoteStars(event);
 
             // Add cases for other commands
             case "stats" -> {
@@ -71,37 +72,12 @@ public class CommandHandler extends ListenerAdapter {
 
     public void handleStats(SlashCommandInteractionEvent event) throws IOException {
         String playerName = Objects.requireNonNull(event.getOption("player")).getAsString();
-        CSVRecord foundRecord = null;
 
 
-        URL url = new URL("https://moneypuck.com/moneypuck/playerData/seasonSummary/2023/regular/teams/skaters/FLA.csv");
-        URLConnection connection = url.openConnection();
 
-        CSVFormat csvFormat = CSVFormat.DEFAULT
-                .builder()
-                .setSkipHeaderRecord(true)
-                .setHeader()
-                .setIgnoreHeaderCase(true)
-                .setTrim(true)
-                .build();
 
-        try(BufferedReader reader = new BufferedReader(
-                new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8)))   {
-            CSVParser parser = new CSVParser(reader, csvFormat);
 
-            for(CSVRecord record : parser)   {
-                String playerColumnValue = record.get("name");
-                String allColumnValue = record.get("situation");
 
-                if(playerColumnValue.equalsIgnoreCase(playerName) && "all".equalsIgnoreCase(allColumnValue))   {
-                    foundRecord = record;
-                }
-            }
-
-        }
-        catch(IOException e )   {
-            e.printStackTrace();
-        }
 
         if(foundRecord != null)   {
             System.out.println("Found stats for " + playerName);
@@ -137,92 +113,7 @@ public class CommandHandler extends ListenerAdapter {
 
     }
 
-    private void handVoteStars(SlashCommandInteractionEvent event)   {
 
-        String firstStar = Objects.requireNonNull(event.getOption("firststar")).getAsString();
-        String secondStar = Objects.requireNonNull(event.getOption("secondstar")).getAsString();
-        String thirdStar = Objects.requireNonNull(event.getOption("thirdstar")).getAsString();
-
-        int gameID = findMostRecentGameID();
-
-        processVote(gameID, firstStar, secondStar, thirdStar);
-
-        String description = "Test description";
-
-
-
-        event.reply("Your votes have been tallied!" + description).queue();
-
-
-    }
-
-    private void processVote(int gameID, String firstStar, String secondStar, String thirdStar)   {
-        Map<String, Integer> stars = Map.of(
-                firstStar, 3,
-                secondStar, 2,
-                thirdStar, 1
-        );
-
-        stars.forEach((starName, points) -> {
-            int playerID = findPlayerIDByName(starName);
-            if(playerID != -1)   {
-                updateVoteSummary(gameID, playerID, points);
-            }
-            else   {
-                System.out.println("Player not found");
-            }
-        });
-
-
-    }
-
-    private int findMostRecentGameID() {
-        String sql = "SELECT id FROM games ORDER BY id DESC LIMIT 1";
-        try (Connection conn = Database.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("id");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return -1; // Indicates not found
-    }
-
-    private void updateVoteSummary(int gameId, int playerId, int points) {
-        String sql = "INSERT INTO vote_summary (game_id, player_id, vote_count) VALUES (?, ?, ?) " +
-                "ON DUPLICATE KEY UPDATE vote_count = vote_count + VALUES(vote_count)";
-        try (Connection conn = Database.getConnection()) {
-            assert conn != null;
-            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setInt(1, gameId);
-                pstmt.setInt(2, playerId);
-                pstmt.setInt(3, points);
-                pstmt.executeUpdate();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private int findPlayerIDByName(String name) {
-        String sql = "SELECT id FROM players WHERE name = ?";
-        try (Connection conn = Database.getConnection()) {
-            assert conn != null;
-            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setString(1, name);
-                try (ResultSet rs = pstmt.executeQuery()) {
-                    if (rs.next()) {
-                        return rs.getInt("id");
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return -1; // Indicates not found
-    }
 
 
 
