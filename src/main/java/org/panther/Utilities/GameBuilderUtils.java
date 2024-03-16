@@ -41,8 +41,12 @@ public class GameBuilderUtils {
             //the score will be found in the second h2. win percentage chance is found in h2 as well at 0 and 2
             String scoreOrDate = row.select("h2").get(1).text();
             String score = null;
-            String time = row.select("h3").get(1).text();
 
+            String time = "";
+
+            if(row.select("h3").size() > 1 ) {
+                time = row.select("h3").get(1).text();
+            }
 
             if (scoreOrDate != null && scoreOrDate.contains("-")) {
                 score = scoreOrDate;

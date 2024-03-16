@@ -1,5 +1,9 @@
 package org.panther;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Activity;
@@ -8,8 +12,13 @@ import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
+import okhttp3.*;
+import org.jetbrains.annotations.NotNull;
 import org.panther.Automation.GameChecker;
 import org.panther.Commands.CommandHandler;
+
+import javax.swing.text.html.Option;
+import java.io.IOException;
 
 public class BotMain {
 
@@ -19,7 +28,7 @@ public class BotMain {
     public static void main(String[] args) {
         try {
             // Replace "your-bot-token" with your actual bot token
-            JDA jda = JDABuilder.createDefault("")
+            JDA jda = JDABuilder.createDefault("MTE5MDE4MjczODQyNzQwMDMzNA.Guy9Ry.Jhj-R4fO-sP6GeZTyWmc0_d0hMvl8ZRezxoq_A")
                     .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
                     .setActivity(Activity.customStatus("Vamos Gatos!"))
                     .enableCache(CacheFlag.VOICE_STATE)
@@ -30,6 +39,8 @@ public class BotMain {
             registerSlashCommands(jda); // Register slash commands
 
             GameChecker gameChecker = new GameChecker(jda);
+
+
             gameChecker.startGameCheckingScheduler();
 
 
@@ -46,110 +57,11 @@ public class BotMain {
 
     private static void registerSlashCommands(JDA jda) {
 
-        OptionData players = new OptionData(OptionType.STRING, "player", "Choose a player", true)
-                .addChoice("Aaron Ekblad", "Aaron Ekblad")
-                .addChoice("Steven Lorentz", "Steven Lorentz")
-                .addChoice("Jonah Gadjovich", "Jonah Gadjovich")
-                .addChoice("Oliver Ekman-Larsson", "Oliver Ekman-Larsson")
-                .addChoice("Sam Bennett", "Sam Bennett")
-                .addChoice("Eetu Luostarinen", "Eetu Luostarinen")
-                .addChoice("Sam Reinhart", "Sam Reinhart")
-                .addChoice("William Lockwood", "William Lockwood")
-                .addChoice("Niko Mikkola", "Niko Mikkola")
-                .addChoice("Evan Rodrigues", "Evan Rodrigues")
-                .addChoice("Ryan Lomberg", "Ryan Lomberg")
-                .addChoice("Carter Verhaeghe", "Carter Verhaeghe")
-                .addChoice("Gustav Forsling", "Gustav Forsling")
-                .addChoice("Brandon Montour", "Brandon Montour")
-                .addChoice("Josh Mahura", "Josh Mahura")
-                .addChoice("Mackie Samoskevich", "Mackie Samoskevich")
-                .addChoice("Dmitry Kulikov", "Dmitry Kulikov")
-                .addChoice("Justin Sourdif", "Justin Sourdif")
-                .addChoice("Nick Cousins", "Nick Cousins")
-                .addChoice("Kevin Stenlund", "Kevin Stenlund")
-                .addChoice("Uvis Balinskis", "Uvis Balinskis")
-                .addChoice("Anton Lundell", "Anton Lundell")
-                .addChoice("Aleksander Barkov", "Aleksander Barkov")
-                .addChoice("Matthew Tkachuk", "Matthew Tkachuk");
+        OptionData players = updatePlayerOptions("player");
+        OptionData playersOne = updatePlayerOptions("firststar");
+        OptionData playersTwo = updatePlayerOptions("secondstar");
+        OptionData playersThree = updatePlayerOptions("thirdstar");
 
-        OptionData firstStar = new OptionData(OptionType.STRING, "firststar", "Vote for your first star of the game.", true)
-            .addChoice("Aaron Ekblad", "Aaron Ekblad")
-                .addChoice("Steven Lorentz", "Steven Lorentz")
-                .addChoice("Jonah Gadjovich", "Jonah Gadjovich")
-                .addChoice("Oliver Ekman-Larsson", "Oliver Ekman-Larsson")
-                .addChoice("Sam Bennett", "Sam Bennett")
-                .addChoice("Eetu Luostarinen", "Eetu Luostarinen")
-                .addChoice("Sam Reinhart", "Sam Reinhart")
-                .addChoice("William Lockwood", "William Lockwood")
-                .addChoice("Niko Mikkola", "Niko Mikkola")
-                .addChoice("Evan Rodrigues", "Evan Rodrigues")
-                .addChoice("Ryan Lomberg", "Ryan Lomberg")
-                .addChoice("Carter Verhaeghe", "Carter Verhaeghe")
-                .addChoice("Gustav Forsling", "Gustav Forsling")
-                .addChoice("Brandon Montour", "Brandon Montour")
-                .addChoice("Josh Mahura", "Josh Mahura")
-                .addChoice("Mackie Samoskevich", "Mackie Samoskevich")
-                .addChoice("Dmitry Kulikov", "Dmitry Kulikov")
-                .addChoice("Justin Sourdif", "Justin Sourdif")
-                .addChoice("Nick Cousins", "Nick Cousins")
-                .addChoice("Kevin Stenlund", "Kevin Stenlund")
-                .addChoice("Uvis Balinskis", "Uvis Balinskis")
-                .addChoice("Anton Lundell", "Anton Lundell")
-                .addChoice("Aleksander Barkov", "Aleksander Barkov")
-                .addChoice("Matthew Tkachuk", "Matthew Tkachuk");
-
-        OptionData secondStar = new OptionData(OptionType.STRING, "secondstar", "Vote for your second star of the game.", true)
-                .addChoice("Aaron Ekblad", "Aaron Ekblad")
-                .addChoice("Steven Lorentz", "Steven Lorentz")
-                .addChoice("Jonah Gadjovich", "Jonah Gadjovich")
-                .addChoice("Oliver Ekman-Larsson", "Oliver Ekman-Larsson")
-                .addChoice("Sam Bennett", "Sam Bennett")
-                .addChoice("Eetu Luostarinen", "Eetu Luostarinen")
-                .addChoice("Sam Reinhart", "Sam Reinhart")
-                .addChoice("William Lockwood", "William Lockwood")
-                .addChoice("Niko Mikkola", "Niko Mikkola")
-                .addChoice("Evan Rodrigues", "Evan Rodrigues")
-                .addChoice("Ryan Lomberg", "Ryan Lomberg")
-                .addChoice("Carter Verhaeghe", "Carter Verhaeghe")
-                .addChoice("Gustav Forsling", "Gustav Forsling")
-                .addChoice("Brandon Montour", "Brandon Montour")
-                .addChoice("Josh Mahura", "Josh Mahura")
-                .addChoice("Mackie Samoskevich", "Mackie Samoskevich")
-                .addChoice("Dmitry Kulikov", "Dmitry Kulikov")
-                .addChoice("Justin Sourdif", "Justin Sourdif")
-                .addChoice("Nick Cousins", "Nick Cousins")
-                .addChoice("Kevin Stenlund", "Kevin Stenlund")
-                .addChoice("Uvis Balinskis", "Uvis Balinskis")
-                .addChoice("Anton Lundell", "Anton Lundell")
-                .addChoice("Aleksander Barkov", "Aleksander Barkov")
-                .addChoice("Matthew Tkachuk", "Matthew Tkachuk");
-
-
-        OptionData thirdStar = new OptionData(OptionType.STRING, "thirdstar", "Vote for your third star of the game.", true)
-                .addChoice("Aaron Ekblad", "Aaron Ekblad")
-                .addChoice("Steven Lorentz", "Steven Lorentz")
-                .addChoice("Jonah Gadjovich", "Jonah Gadjovich")
-                .addChoice("Oliver Ekman-Larsson", "Oliver Ekman-Larsson")
-                .addChoice("Sam Bennett", "Sam Bennett")
-                .addChoice("Eetu Luostarinen", "Eetu Luostarinen")
-                .addChoice("Sam Reinhart", "Sam Reinhart")
-                .addChoice("William Lockwood", "William Lockwood")
-                .addChoice("Niko Mikkola", "Niko Mikkola")
-                .addChoice("Evan Rodrigues", "Evan Rodrigues")
-                .addChoice("Ryan Lomberg", "Ryan Lomberg")
-                .addChoice("Carter Verhaeghe", "Carter Verhaeghe")
-                .addChoice("Gustav Forsling", "Gustav Forsling")
-                .addChoice("Brandon Montour", "Brandon Montour")
-                .addChoice("Josh Mahura", "Josh Mahura")
-                .addChoice("Mackie Samoskevich", "Mackie Samoskevich")
-                .addChoice("Dmitry Kulikov", "Dmitry Kulikov")
-                .addChoice("Justin Sourdif", "Justin Sourdif")
-                .addChoice("Nick Cousins", "Nick Cousins")
-                .addChoice("Kevin Stenlund", "Kevin Stenlund")
-                .addChoice("Uvis Balinskis", "Uvis Balinskis")
-                .addChoice("Anton Lundell", "Anton Lundell")
-                .addChoice("Aleksander Barkov", "Aleksander Barkov")
-                .addChoice("Matthew Tkachuk", "Matthew Tkachuk");
 
 
 
@@ -163,12 +75,68 @@ public class BotMain {
                         ),
                 Commands.slash("stats", "Get the most relevant stats for a specified player.")
                         .addOptions(players),
-                Commands.slash("stars", "Vote for the current game's three stars.")
-                        .addOptions(firstStar, secondStar, thirdStar)
+                Commands.slash("vote", "Vote for the current game's three stars.")
+                        .addOptions(playersOne, playersTwo, playersThree),
+                Commands.slash("stars", "View the stars for a game.")
+                        .addOptions(
+                                new OptionData(OptionType.STRING, "date", "Enter the date for the score (format: yyyy/MM/dd)", false)
+
+                        )
 
 
         ).queue();
     }
+
+
+
+
+    private static OptionData updatePlayerOptions(String argument) {
+        String url = "https://api-web.nhle.com/v1/roster/FLA/current";
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(url).build();
+        OptionData players = new OptionData(OptionType.STRING, argument, "Choose a player", true);
+
+        try {
+            Response response = client.newCall(request).execute(); // Synchronous call
+            if (response.isSuccessful() && response.body() != null) {
+                String responseBody = response.body().string();
+                JsonObject jsonObject = JsonParser.parseString(responseBody).getAsJsonObject();
+                JsonArray allPlayers = new JsonArray();
+
+                // Combine players from different categories
+                if (jsonObject.has("forwards")) {
+                    allPlayers.addAll(jsonObject.getAsJsonArray("forwards"));
+                }
+                if (jsonObject.has("defensemen")) {
+                    allPlayers.addAll(jsonObject.getAsJsonArray("defensemen"));
+                }
+                if (jsonObject.has("goalies")) {
+                    allPlayers.addAll(jsonObject.getAsJsonArray("goalies"));
+                }
+
+                // Add players to options
+                for (JsonElement playerElement : allPlayers) {
+                    JsonObject player = playerElement.getAsJsonObject();
+                    String firstname = player.getAsJsonObject("firstName").get("default").getAsString();
+                    String lastName = player.getAsJsonObject("lastName").get("default").getAsString();
+                    String fullName = firstname + " " + lastName;
+
+                    players.addChoice(fullName, fullName);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return players;
+    }
+
+
+
+
+
+
+
 
 
 

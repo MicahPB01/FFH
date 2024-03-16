@@ -10,13 +10,17 @@ public class Database {
     public static Connection getConnection() {
         try {
             // Check if the connection is null or closed
+            System.out.println("Attempting to connect to database");
             if (connection == null || connection.isClosed()) {
-                String url = "jdbc:mysql://localhost:3306/discordbot"; // Your database URL and name
-                String user = "root"; // Your database username
-                String password = "alpine"; // Your database password
+                String url = "jdbc:mysql://localhost:3305/FlyingFluffyPanthers"; // Your database URL and name
+                String user = "fluffy"; // Your database username
+                String password = "FFHFFFFFS"; // Your database password
 
                 // Establish a new connection
+
                 connection = DriverManager.getConnection(url, user, password);
+
+                System.out.println("Connected to database");
             }
         } catch (SQLException e) {
             e.printStackTrace();

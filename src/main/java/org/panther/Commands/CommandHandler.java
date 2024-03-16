@@ -7,11 +7,8 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.jetbrains.annotations.NotNull;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.panther.Commands.Score.Score;
+import org.panther.Database;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -20,12 +17,13 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
-import java.time.Instant;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Map;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class CommandHandler extends ListenerAdapter {
 
@@ -42,28 +40,21 @@ public class CommandHandler extends ListenerAdapter {
         System.out.println("Command");
 
         switch (commandName) {
-            case "ping":  
-                handlePing(event);
-                break;
-            case "profile":
-                handleHelp(event);
-                break;
-            case "score":
-                new Score().execute(event);
-                break;
+            case "ping" -> handlePing(event);
+            case "profile" -> handleHelp(event);
+            case "score" -> new Score().execute(event);
+            //case "stars" -> handVoteStars(event);
+            case "vote" ->handVoteStars(event);
+
             // Add cases for other commands
-            case "stats":
+            case "stats" -> {
                 try {
                     handleStats(event);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                break;
-
-
-            default:
-                event.reply("Unknown command").setEphemeral(true).queue();
-                break;
+            }
+            default -> event.reply("Unknown command").setEphemeral(true).queue();
         }
     }
 
@@ -77,84 +68,6 @@ public class CommandHandler extends ListenerAdapter {
     }
 
 
-
-
-
-
-
-
-    private String[] findScore(SlashCommandInteractionEvent event, String date)   {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        String[] gameInfo = new String[6];
-
-        LocalDateTime now = LocalDateTime.now();
-        String currentDate = (dateTimeFormatter.format(now));
-
-        if(date != null)   {
-            currentDate = date.replaceAll("/", "");
-        }
-
-
-        String url = "https://moneypuck.com/moneypuck/dates/" + currentDate + ".htm";
-
-        System.out.println(url);
-
-
-
-
-
-        try {
-            Document doc = Jsoup.connect(url).get();
-            Elements rows = doc.select("table tr");
-
-            for (Element row : rows) {
-                Elements teamLogos = row.select("img");
-                if (teamLogos.size() < 2) continue; // Skip rows with less than 2 teams
-
-                String team1 = teamLogos.get(0).attr("alt");
-                String team2 = teamLogos.get(1).attr("alt");
-
-                gameInfo[0] = team1;
-                gameInfo[1] = team2;
-                gameInfo[4] = teamLogos.get(0).attr("src");
-                gameInfo[5] = teamLogos.get(1).attr("src");
-
-                if (team1.contains("FLORIDA PANTHERS") || team2.contains("FLORIDA PANTHERS")) {
-                    String opponent = team1.contains("FLORIDA PANTHERS") ? team2 : team1;
-
-                    String score;
-
-
-
-                    Elements oddsAndScores = row.select("h2");
-                    Element secondH2 = oddsAndScores.get(1);
-                    score = secondH2.text();
-
-                    if(score.contains("%"))   {
-                        score = row.select("h3").text(); //grabbing date instead
-                        score = score.replace(" Preview", "");
-                    }
-
-                    gameInfo[2] = score;
-
-
-                    System.out.println(score);
-
-                    date = row.select("h4").text(); // Assuming date is in an h4 tag
-
-                    gameInfo[3] = date;
-
-
-                    return gameInfo;
-                }
-            }
-            return null;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
 
     public void handleStats(SlashCommandInteractionEvent event) throws IOException {
         String playerName = Objects.requireNonNull(event.getOption("player")).getAsString();
@@ -222,6 +135,93 @@ public class CommandHandler extends ListenerAdapter {
 
 
 
+    }
+
+    private void handVoteStars(SlashCommandInteractionEvent event)   {
+
+        String firstStar = Objects.requireNonNull(event.getOption("firststar")).getAsString();
+        String secondStar = Objects.requireNonNull(event.getOption("secondstar")).getAsString();
+        String thirdStar = Objects.requireNonNull(event.getOption("thirdstar")).getAsString();
+
+        int gameID = findMostRecentGameID();
+
+        processVote(gameID, firstStar, secondStar, thirdStar);
+
+        String description = "Test description";
+
+
+
+        event.reply("Your votes have been tallied!" + description).queue();
+
+
+    }
+
+    private void processVote(int gameID, String firstStar, String secondStar, String thirdStar)   {
+        Map<String, Integer> stars = Map.of(
+                firstStar, 3,
+                secondStar, 2,
+                thirdStar, 1
+        );
+
+        stars.forEach((starName, points) -> {
+            int playerID = findPlayerIDByName(starName);
+            if(playerID != -1)   {
+                updateVoteSummary(gameID, playerID, points);
+            }
+            else   {
+                System.out.println("Player not found");
+            }
+        });
+
+
+    }
+
+    private int findMostRecentGameID() {
+        String sql = "SELECT id FROM games ORDER BY id DESC LIMIT 1";
+        try (Connection conn = Database.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1; // Indicates not found
+    }
+
+    private void updateVoteSummary(int gameId, int playerId, int points) {
+        String sql = "INSERT INTO vote_summary (game_id, player_id, vote_count) VALUES (?, ?, ?) " +
+                "ON DUPLICATE KEY UPDATE vote_count = vote_count + VALUES(vote_count)";
+        try (Connection conn = Database.getConnection()) {
+            assert conn != null;
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setInt(1, gameId);
+                pstmt.setInt(2, playerId);
+                pstmt.setInt(3, points);
+                pstmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private int findPlayerIDByName(String name) {
+        String sql = "SELECT id FROM players WHERE name = ?";
+        try (Connection conn = Database.getConnection()) {
+            assert conn != null;
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, name);
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getInt("id");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1; // Indicates not found
     }
 
 

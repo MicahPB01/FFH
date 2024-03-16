@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.0.0' // Replace 'x.y.z' with the desired version
 }
 
 group 'org.example'
@@ -12,6 +13,8 @@ repositories {
     }
 }
 
+
+
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
@@ -23,7 +26,30 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.13.1'
     implementation 'org.apache.commons:commons-csv:1.9.0'
 
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'org.apache.commons:commons-lang3:3.0'
+
 }
+
+compileJava   {
+    sourceCompatibility = '17'
+    targetCompatibility = '17'
+}
+
+tasks.jar {
+    manifest.attributes["Main-Class"] = "org.panther.BotMain"
+}
+
+
+shadowJar {
+    archiveBaseName.set('FlyingFluffyBot') // Set the desired JAR file name
+    archiveClassifier.set('')
+    archiveVersion.set('')
+    configurations = [project.configurations.runtimeClasspath]
+}
+
+
 
 test {
     useJUnitPlatform()
