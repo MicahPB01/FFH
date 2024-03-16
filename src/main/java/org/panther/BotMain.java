@@ -41,6 +41,7 @@ public class BotMain {
             GameChecker gameChecker = new GameChecker(jda);
 
 
+
             gameChecker.startGameCheckingScheduler();
 
 
