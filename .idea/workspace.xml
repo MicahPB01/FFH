@@ -4,14 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3584d4fa-6646-4ec1-8080-044ce5ecaf8c" name="Changes" comment="Switching over to NHL api">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Votes/Votes.java" afterDir="false" />
+    <list default="true" id="3584d4fa-6646-4ec1-8080-044ce5ecaf8c" name="Changes" comment="Finished moving /stats to new API">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/panther/Utilities/DateTimeUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/panther/Utilities/GameBuilderUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/panther/Utilities/GameBuilderUtilsOld.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Automation/GameChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Automation/GameChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/BotMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/BotMain.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/CommandHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Score/Score.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/Score/Score.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Utilities/DateTimeUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Utilities/GameBuilderUtils.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -275,7 +275,14 @@
       <option name="project" value="LOCAL" />
       <updated>1710558198608</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Finished moving /stats to new API">
+      <created>1710558849650</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1710558849650</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -296,6 +303,7 @@
     <MESSAGE value="Added youtube audio playback functionality" />
     <MESSAGE value="Added score command" />
     <MESSAGE value="Switching over to NHL api" />
-    <option name="LAST_COMMIT_MESSAGE" value="Switching over to NHL api" />
+    <MESSAGE value="Finished moving /stats to new API" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished moving /stats to new API" />
   </component>
 </project>

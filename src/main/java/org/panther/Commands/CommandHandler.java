@@ -72,12 +72,37 @@ public class CommandHandler extends ListenerAdapter {
 
     public void handleStats(SlashCommandInteractionEvent event) throws IOException {
         String playerName = Objects.requireNonNull(event.getOption("player")).getAsString();
+        CSVRecord foundRecord = null;
 
 
+        URL url = new URL("https://moneypuck.com/moneypuck/playerData/seasonSummary/2023/regular/teams/skaters/FLA.csv");
+        URLConnection connection = url.openConnection();
 
+        CSVFormat csvFormat = CSVFormat.DEFAULT
+                .builder()
+                .setSkipHeaderRecord(true)
+                .setHeader()
+                .setIgnoreHeaderCase(true)
+                .setTrim(true)
+                .build();
 
+        try(BufferedReader reader = new BufferedReader(
+                new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8)))   {
+            CSVParser parser = new CSVParser(reader, csvFormat);
 
+            for(CSVRecord record : parser)   {
+                String playerColumnValue = record.get("name");
+                String allColumnValue = record.get("situation");
 
+                if(playerColumnValue.equalsIgnoreCase(playerName) && "all".equalsIgnoreCase(allColumnValue))   {
+                    foundRecord = record;
+                }
+            }
+
+        }
+        catch(IOException e )   {
+            e.printStackTrace();
+        }
 
         if(foundRecord != null)   {
             System.out.println("Found stats for " + playerName);

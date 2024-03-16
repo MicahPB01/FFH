@@ -1,5 +1,9 @@
 package org.panther.Automation;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Message;
@@ -9,13 +13,18 @@ import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.concrete.ThreadChannel;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.utils.messages.MessageCreateData;
-import org.jsoup.nodes.Document;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.panther.Commands.Score.GameInfo;
 import org.panther.Database;
 import org.panther.Models.PlayerVoteCount;
+import org.panther.Utilities.DateTimeUtils;
 import org.panther.Utilities.GameBuilderUtils;
+import org.panther.Utilities.GameBuilderUtilsOld;
 
 import java.awt.*;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -68,26 +77,41 @@ public class GameChecker {
     private void checkForGame() {
 
         String currentDate = DateTimeUtils.dateFromCurrentDay();
-        //String currentDate = "20240104";
-        String url = GameBuilderUtils.findUrl(currentDate);
-        Document webScrape = GameBuilderUtils.getWebsiteForScrape(url);
+        String url = "https://api-web.nhle.com/v1/scoreboard/FLA/now";
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(url).build();
+        GameInfo currentGame = new GameInfo();
 
-        if(GameBuilderUtils.checkForGame(webScrape))   {
+        try   {
+            Response response = client.newCall(request).execute();
 
-            GameInfo currentGame = GameBuilderUtils.findGameInfo(webScrape, currentDate);
+            if(response.isSuccessful() && response.body() != null) {
+                String responseBody = response.body().string();
+                JsonObject jsonObject = JsonParser.parseString(responseBody).getAsJsonObject();
+                JsonArray gamesByDate = jsonObject.getAsJsonArray("gamesByDate");
 
-            if(currentGame != null)   {
-                try   {
-                    createGameDayThread(currentGame);
-                    createDataEntry(currentGame);
-                }
-                catch (DateTimeParseException | InterruptedException e)   {
-                    e.printStackTrace();
+                for (JsonElement element : gamesByDate) {
+                    JsonObject dateObject = element.getAsJsonObject();
+                    String date = dateObject.get("date").getAsString();
+                    if (currentDate.equals(date)) {
+                        JsonArray games = dateObject.getAsJsonArray("games");
+                        if (games.size() > 0) {
+                            JsonObject game = games.get(0).getAsJsonObject();
+
+                            currentGame = GameBuilderUtils.findGameInfo(game);
+
+                            createGameDayThread(currentGame);
+                            createDataEntry(currentGame);
+
+                        }
+                    }
                 }
             }
 
-
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
+
 
     }
 
@@ -128,9 +152,9 @@ public class GameChecker {
 
     private String buildThreadName(GameInfo currentGame)   {
 
-        String opponent = GameBuilderUtils.determineOpponent(currentGame);
+        String opponent = GameBuilderUtilsOld.determineOpponent(currentGame);
 
-        return opponent + " | " + currentGame.getTime() + " | " + DateTimeUtils.reverseDate(currentGame.getDate());
+        return opponent + " | " + currentGame.getTime() + " | " + currentGame.getDate();
 
 
     }
@@ -146,7 +170,7 @@ public class GameChecker {
 
     private void createDataEntry(GameInfo currentGame)   {
         String sql = "INSERT INTO games (game_date, description) VALUES (?, ?)";
-        int dateInt = Integer.parseInt(DateTimeUtils.dateFromCurrentDay());
+        int dateInt = Integer.parseInt(DateTimeUtils.dateFromCurrentDay().replaceAll("-",""));
 
         try(Connection conn = Database.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql))   {
@@ -183,7 +207,7 @@ public class GameChecker {
         embedBuilder.setColor(Color.RED);
         embedBuilder.setTitle(currentGame.getAwayTeam() + " VS " + currentGame.getHomeTeam() + " Pregame Poll");
         embedBuilder.setThumbnail(currentGame.getHomeTeamLogo());
-        embedBuilder.addField("Date: ", DateTimeUtils.reverseDate(currentGame.getDate()), true);
+        embedBuilder.addField("Date: ", DateTimeUtils.reverseDate(DateTimeUtils.removeDateDash(currentGame.getDate())), true);
         embedBuilder.addField("Game Winner", "Predict the winner! (Cat Emoji for Panthers, X for the other team!", false);
         embedBuilder.setFooter("Game Information", currentGame.getAwayTeamLogo());
         embedBuilder.setTimestamp(Instant.now());
