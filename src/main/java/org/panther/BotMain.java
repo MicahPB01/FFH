@@ -19,6 +19,7 @@ import org.panther.Commands.CommandHandler;
 
 import javax.swing.text.html.Option;
 import java.io.IOException;
+import java.util.LinkedList;
 
 public class BotMain {
 
@@ -43,6 +44,9 @@ public class BotMain {
 
 
             gameChecker.startGameCheckingScheduler();
+
+
+
 
 
 
@@ -116,8 +120,8 @@ public class BotMain {
                 }
 
                 // Add players to options
-                for (JsonElement playerElement : allPlayers) {
-                    JsonObject player = playerElement.getAsJsonObject();
+                for (int i = 0; i < 25; i++) {
+                    JsonObject player = allPlayers.get(i).getAsJsonObject();
                     String firstname = player.getAsJsonObject("firstName").get("default").getAsString();
                     String lastName = player.getAsJsonObject("lastName").get("default").getAsString();
                     String fullName = firstname + " " + lastName;
