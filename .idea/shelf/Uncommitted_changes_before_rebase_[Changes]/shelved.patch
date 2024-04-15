@@ -1,0 +1,48 @@
+Index: src/main/java/org/panther/BotMain.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.panther;\r\n\r\nimport com.google.gson.JsonArray;\r\nimport com.google.gson.JsonElement;\r\nimport com.google.gson.JsonObject;\r\nimport com.google.gson.JsonParser;\r\nimport net.dv8tion.jda.api.JDABuilder;\r\nimport net.dv8tion.jda.api.JDA;\r\nimport net.dv8tion.jda.api.entities.Activity;\r\nimport net.dv8tion.jda.api.interactions.commands.OptionType;\r\nimport net.dv8tion.jda.api.interactions.commands.build.OptionData;\r\nimport net.dv8tion.jda.api.requests.GatewayIntent;\r\nimport net.dv8tion.jda.api.interactions.commands.build.Commands;\r\nimport net.dv8tion.jda.api.utils.cache.CacheFlag;\r\nimport okhttp3.*;\r\nimport org.jetbrains.annotations.NotNull;\r\nimport org.panther.Automation.GameChecker;\r\nimport org.panther.Commands.CommandHandler;\r\n\r\nimport javax.swing.text.html.Option;\r\nimport java.io.IOException;\r\n\r\npublic class BotMain {\r\n\r\n\r\n\r\n\r\n    public static void main(String[] args) {\r\n        try {\r\n            // Replace \"your-bot-token\" with your actual bot token\r\n            JDA jda = JDABuilder.createDefault(\"MTE5MDE4MjczODQyNzQwMDMzNA.GUUIoR.Zzvj7ln3QBT0GH34TGLLjdKvSZM7F-K5hhyNDs\")\r\n                    .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)\r\n                    .setActivity(Activity.customStatus(\"Vamos Gatos!\"))\r\n                    .enableCache(CacheFlag.VOICE_STATE)\r\n                    .addEventListeners(new CommandHandler())\r\n                    .build();\r\n\r\n            jda.awaitReady(); // Wait for the bot to log in\r\n            registerSlashCommands(jda); // Register slash commands\r\n\r\n            GameChecker gameChecker = new GameChecker(jda);\r\n\r\n\r\n\r\n            gameChecker.startGameCheckingScheduler();\r\n\r\n\r\n\r\n\r\n            System.out.println(\"Bot is ready!\");\r\n\r\n\r\n\r\n        } catch (InterruptedException e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n\r\n    private static void registerSlashCommands(JDA jda) {\r\n\r\n        OptionData players = updatePlayerOptions(\"player\");\r\n        OptionData playersOne = updatePlayerOptions(\"firststar\");\r\n        OptionData playersTwo = updatePlayerOptions(\"secondstar\");\r\n        OptionData playersThree = updatePlayerOptions(\"thirdstar\");\r\n\r\n\r\n\r\n\r\n        // Register slash commands here\r\n        jda.updateCommands().addCommands(\r\n                Commands.slash(\"ping\", \"Test the bot's response time!\"),\r\n                Commands.slash(\"score\", \"Get the score of the most recent Panthers Game!\")\r\n                        .addOptions(\r\n                                new OptionData(OptionType.STRING, \"date\", \"Enter the date for the score (format: yyyy/MM/dd)\", false)\r\n                                // false at the end signifies that this argument is optional\r\n                        ),\r\n                Commands.slash(\"stats\", \"Get the most relevant stats for a specified player.\")\r\n                        .addOptions(players),\r\n                Commands.slash(\"vote\", \"Vote for the current game's three stars.\")\r\n                        .addOptions(playersOne, playersTwo, playersThree),\r\n                Commands.slash(\"stars\", \"View the stars for a game.\")\r\n                        .addOptions(\r\n                                new OptionData(OptionType.STRING, \"date\", \"Enter the date for the score (format: yyyy/MM/dd)\", false)\r\n\r\n                        )\r\n\r\n\r\n        ).queue();\r\n    }\r\n\r\n\r\n\r\n\r\n    private static OptionData updatePlayerOptions(String argument) {\r\n        String url = \"https://api-web.nhle.com/v1/roster/FLA/current\";\r\n        OkHttpClient client = new OkHttpClient();\r\n        Request request = new Request.Builder().url(url).build();\r\n        OptionData players = new OptionData(OptionType.STRING, argument, \"Choose a player\", true);\r\n\r\n        try {\r\n            Response response = client.newCall(request).execute(); // Synchronous call\r\n            if (response.isSuccessful() && response.body() != null) {\r\n                String responseBody = response.body().string();\r\n                JsonObject jsonObject = JsonParser.parseString(responseBody).getAsJsonObject();\r\n                JsonArray allPlayers = new JsonArray();\r\n\r\n                // Combine players from different categories\r\n                if (jsonObject.has(\"forwards\")) {\r\n                    allPlayers.addAll(jsonObject.getAsJsonArray(\"forwards\"));\r\n                }\r\n                if (jsonObject.has(\"defensemen\")) {\r\n                    allPlayers.addAll(jsonObject.getAsJsonArray(\"defensemen\"));\r\n                }\r\n                if (jsonObject.has(\"goalies\")) {\r\n                    allPlayers.addAll(jsonObject.getAsJsonArray(\"goalies\"));\r\n                }\r\n\r\n                // Add players to options\r\n                for (JsonElement playerElement : allPlayers) {\r\n                    JsonObject player = playerElement.getAsJsonObject();\r\n                    String firstname = player.getAsJsonObject(\"firstName\").get(\"default\").getAsString();\r\n                    String lastName = player.getAsJsonObject(\"lastName\").get(\"default\").getAsString();\r\n                    String fullName = firstname + \" \" + lastName;\r\n\r\n                    players.addChoice(fullName, fullName);\r\n                }\r\n            }\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n\r\n        return players;\r\n    }\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/panther/BotMain.java b/src/main/java/org/panther/BotMain.java
+--- a/src/main/java/org/panther/BotMain.java	(revision 178f74e3c5f9b988c7ecdfa48e140d09ac54f382)
++++ b/src/main/java/org/panther/BotMain.java	(date 1713212518427)
+@@ -19,6 +19,7 @@
+ 
+ import javax.swing.text.html.Option;
+ import java.io.IOException;
++import java.util.LinkedList;
+ 
+ public class BotMain {
+ 
+@@ -28,7 +29,7 @@
+     public static void main(String[] args) {
+         try {
+             // Replace "your-bot-token" with your actual bot token
+-            JDA jda = JDABuilder.createDefault("MTE5MDE4MjczODQyNzQwMDMzNA.GUUIoR.Zzvj7ln3QBT0GH34TGLLjdKvSZM7F-K5hhyNDs")
++            JDA jda = JDABuilder.createDefault("")
+                     .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
+                     .setActivity(Activity.customStatus("Vamos Gatos!"))
+                     .enableCache(CacheFlag.VOICE_STATE)
+@@ -47,6 +48,9 @@
+ 
+ 
+ 
++
++
++
+             System.out.println("Bot is ready!");
+ 
+ 
+@@ -116,8 +120,8 @@
+                 }
+ 
+                 // Add players to options
+-                for (JsonElement playerElement : allPlayers) {
+-                    JsonObject player = playerElement.getAsJsonObject();
++                for (int i = 0; i < 25; i++) {
++                    JsonObject player = allPlayers.get(i).getAsJsonObject();
+                     String firstname = player.getAsJsonObject("firstName").get("default").getAsString();
+                     String lastName = player.getAsJsonObject("lastName").get("default").getAsString();
+                     String fullName = firstname + " " + lastName;
