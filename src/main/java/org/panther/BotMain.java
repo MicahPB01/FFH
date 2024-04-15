@@ -30,7 +30,7 @@ public class BotMain {
     public static void main(String[] args) {
         try {
             // Replace "your-bot-token" with your actual bot token
-            JDA jda = JDABuilder.createDefault("")
+            JDA jda = JDABuilder.createDefault("MTE5MDE4MjczODQyNzQwMDMzNA.GUUIoR.Zzvj7ln3QBT0GH34TGLLjdKvSZM7F-K5hhyNDs")
                     .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
                     .setActivity(Activity.customStatus("Vamos Gatos!"))
                     .enableCache(CacheFlag.VOICE_STATE)
