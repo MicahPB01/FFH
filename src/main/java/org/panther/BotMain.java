@@ -16,6 +16,8 @@ import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
 import org.panther.Automation.GameChecker;
 import org.panther.Commands.CommandHandler;
+import org.panther.Utilities.DataFetcher;
+import org.panther.Utilities.PlayerUpdater;
 
 import javax.swing.text.html.Option;
 import java.io.IOException;
@@ -44,6 +46,15 @@ public class BotMain {
 
 
             gameChecker.startGameCheckingScheduler();
+
+
+            try   {
+                String jsonData = DataFetcher.fetchPlayerData();
+                PlayerUpdater.updateDatabase(jsonData);
+            }
+            catch (IOException | InterruptedException e)   {
+                e.printStackTrace();
+            }
 
 
 
@@ -99,7 +110,7 @@ public class BotMain {
         String url = "https://api-web.nhle.com/v1/roster/FLA/current";
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(url).build();
-        OptionData players = new OptionData(OptionType.STRING, argument, "Choose a player", true);
+        OptionData players = new OptionData(OptionType.STRING, argument, "Choose a player", false);
 
         try {
             Response response = client.newCall(request).execute(); // Synchronous call

@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3584d4fa-6646-4ec1-8080-044ce5ecaf8c" name="Changes" comment="Adjusted GameBuilderUtils and GameChecker to use new API" />
+    <list default="true" id="3584d4fa-6646-4ec1-8080-044ce5ecaf8c" name="Changes" comment="fixed player DB">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/panther/Utilities/DataFetcher.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/panther/Utilities/PlayerUpdater.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/BotMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/BotMain.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -187,9 +192,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.BotMain" />
-        <item itemvalue="Gradle.AvalancheDiscordBot [shadowJar]" />
         <item itemvalue="Gradle.AvalancheDiscordBot [build]" />
+        <item itemvalue="Gradle.AvalancheDiscordBot [shadowJar]" />
+        <item itemvalue="Application.BotMain" />
         <item itemvalue="Gradle.AvalancheDiscordBot [jar]" />
         <item itemvalue="Gradle.AvalancheDiscordBot [clean]" />
       </list>
@@ -295,7 +300,14 @@
       <option name="project" value="LOCAL" />
       <updated>1710565215813</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="fixed player DB">
+      <created>1713212815049</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1713212815049</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -318,6 +330,7 @@
     <MESSAGE value="Switching over to NHL api" />
     <MESSAGE value="Finished moving /stats to new API" />
     <MESSAGE value="Adjusted GameBuilderUtils and GameChecker to use new API" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adjusted GameBuilderUtils and GameChecker to use new API" />
+    <MESSAGE value="fixed player DB" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed player DB" />
   </component>
 </project>
