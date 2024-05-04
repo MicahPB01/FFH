@@ -1,10 +1,15 @@
 package org.panther.Commands;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.Command;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -77,71 +82,78 @@ public class CommandHandler extends ListenerAdapter {
 
 
     public void handleStats(SlashCommandInteractionEvent event) throws IOException {
+        OkHttpClient client = new OkHttpClient();
         String playerName = Objects.requireNonNull(event.getOption("player")).getAsString();
-        CSVRecord foundRecord = null;
+        int playerID = findPlayerIDByName(playerName);
 
-
-        URL url = new URL("https://moneypuck.com/moneypuck/playerData/seasonSummary/2023/regular/teams/skaters/FLA.csv");
-        URLConnection connection = url.openConnection();
-
-        CSVFormat csvFormat = CSVFormat.DEFAULT
-                .builder()
-                .setSkipHeaderRecord(true)
-                .setHeader()
-                .setIgnoreHeaderCase(true)
-                .setTrim(true)
-                .build();
-
-        try(BufferedReader reader = new BufferedReader(
-                new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8)))   {
-            CSVParser parser = new CSVParser(reader, csvFormat);
-
-            for(CSVRecord record : parser)   {
-                String playerColumnValue = record.get("name");
-                String allColumnValue = record.get("situation");
-
-                if(playerColumnValue.equalsIgnoreCase(playerName) && "all".equalsIgnoreCase(allColumnValue))   {
-                    foundRecord = record;
-                }
-            }
-
-        }
-        catch(IOException e )   {
-            e.printStackTrace();
+        if (playerID == -1) {
+            event.reply("Player not found.").setEphemeral(true).queue();
+            return;
         }
 
-        if(foundRecord != null)   {
-            System.out.println("Found stats for " + playerName);
+        String url = "https://api-web.nhle.com/v1/player/" + playerID + "/landing";
+        Request request = new Request.Builder().url(url).build();
 
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
-            String columnA = foundRecord.get("playerId"); // Replace "A" with the actual header name for column A
-            int columnG = Integer.parseInt(foundRecord.get("games_played")); // Replace "G" with the actual header name for column G
-            int columnI = (int) Double.parseDouble(foundRecord.get("shifts")); // Replace "I" with the actual header name for column I
-            int columnAB = (int) Double.parseDouble(foundRecord.get("I_F_primaryAssists")); // Replace "AB" with the actual header name for column AB
-            int columnAC = (int) Double.parseDouble(foundRecord.get("I_F_secondaryAssists")); // Replace "AC" with the actual header name for column AC
-            int columnAI = (int) Double.parseDouble(foundRecord.get("I_F_goals")); // Replace "AI" with the actual header name for column AI
+            String jsonData = response.body().string();
+            JsonObject jsonObject = JsonParser.parseString(jsonData).getAsJsonObject();
 
+            // Extract stats for regular season and playoffs
+            JsonObject featuredStats = jsonObject.getAsJsonObject("featuredStats");
+            JsonObject regularSeasonStats = featuredStats.getAsJsonObject("regularSeason").getAsJsonObject("subSeason");
+            JsonObject playoffStats = featuredStats.getAsJsonObject("playoffs").getAsJsonObject("subSeason");
+
+            // Calculate combined stats
+            int combinedGoals = regularSeasonStats.get("goals").getAsInt() + playoffStats.get("goals").getAsInt();
+            int combinedAssists = regularSeasonStats.get("assists").getAsInt() + playoffStats.get("assists").getAsInt();
+            int combinedGamesPlayed = regularSeasonStats.get("gamesPlayed").getAsInt() + playoffStats.get("gamesPlayed").getAsInt();
 
             EmbedBuilder embedBuilder = new EmbedBuilder();
+            embedBuilder.setTitle(playerName + " - Season Overview");
+            embedBuilder.setColor(Color.decode("#C8102E"));  // RED
+            embedBuilder.setThumbnail(jsonObject.get("headshot").getAsString());
+            embedBuilder.addField("Team", jsonObject.getAsJsonObject("fullTeamName").get("default").getAsString(), false);  // Not inline to ensure it appears on its own line
 
-            embedBuilder.setTitle(playerName);
-            embedBuilder.setColor(Color.RED);
-            embedBuilder.setThumbnail("https://assets.nhle.com/mugs/nhl/20232024/FLA/" + columnA + ".png"); // Set the image URL
-            embedBuilder.addField("Goals: " , String.valueOf(columnAI), true);
-            embedBuilder.addField("Assists: ", String.valueOf((columnAC + columnAB)), true);
+// Stats line
+            embedBuilder.addField("Goals", String.valueOf(combinedGoals), true);
+            embedBuilder.addField("Assists", String.valueOf(combinedAssists), true);
+            embedBuilder.addField("Shoots/Catches", jsonObject.get("shootsCatches").getAsString(), true);
 
-            embedBuilder.addField("Games Played: ", String.valueOf(columnG), true);
-            embedBuilder.addField("Number of shifts: " , String.valueOf(columnI), true);
-            embedBuilder.setFooter("Player Information", null);
-            embedBuilder.setTimestamp(LocalDateTime.now());
+// Physical attributes line
+            embedBuilder.addField("Height", jsonObject.get("heightInInches").getAsInt() + " in", true);
+            embedBuilder.addField("Weight", jsonObject.get("weightInPounds").getAsInt() + " lbs", true);
+            embedBuilder.addField("Position", jsonObject.get("position").getAsString(), true);
+
+            embedBuilder.addField("Games Played", String.valueOf(combinedGamesPlayed), false);  // Not inline to ensure it appears on its own line
+            embedBuilder.setFooter("Data includes Regular Season and Playoffs", null);
+
             event.replyEmbeds(embedBuilder.build()).queue();
-
+        } catch (IOException e) {
+            e.printStackTrace();
+            event.reply("Failed to fetch player stats.").setEphemeral(true).queue();
         }
 
 
+    }
 
 
-
+    private static int findPlayerIDByName(String fullName) {
+        String[] names = fullName.split(" ", 2);  // Assumes name is in "First Last" format
+        String sql = "SELECT id FROM players WHERE first_name = ? AND last_name = ? LIMIT 1";
+        try (Connection conn = Database.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, names[0]); // first_name
+            pstmt.setString(2, names.length > 1 ? names[1] : ""); // last_name
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1; // Indicates not found
     }
 
     @Override
