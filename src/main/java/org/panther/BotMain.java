@@ -73,10 +73,14 @@ public class BotMain {
 
     private static void registerSlashCommands(JDA jda) {
 
-        OptionData players = updatePlayerOptions("player");
-        OptionData playersOne = updatePlayerOptions("firststar");
-        OptionData playersTwo = updatePlayerOptions("secondstar");
-        OptionData playersThree = updatePlayerOptions("thirdstar");
+        OptionData players = new OptionData(OptionType.STRING, "player", "Choose a player", true)
+                .setAutoComplete(true);
+        OptionData playersOne = new OptionData(OptionType.STRING, "firststar", "Choose a player", true)
+                .setAutoComplete(true);
+        OptionData playersTwo = new OptionData(OptionType.STRING, "secondstar", "Choose a player", true)
+                .setAutoComplete(true);
+        OptionData playersThree = new OptionData(OptionType.STRING, "thirdstar", "Choose a player", true)
+                .setAutoComplete(true);
 
 
 
@@ -84,20 +88,27 @@ public class BotMain {
         // Register slash commands here
         jda.updateCommands().addCommands(
                 Commands.slash("ping", "Test the bot's response time!"),
+
                 Commands.slash("score", "Get the score of the most recent Panthers Game!")
                         .addOptions(
                                 new OptionData(OptionType.STRING, "date", "Enter the date for the score (format: yyyy/MM/dd)", false)
                                 // false at the end signifies that this argument is optional
                         ),
+
+
                 Commands.slash("stats", "Get the most relevant stats for a specified player.")
                         .addOptions(players),
+
                 Commands.slash("vote", "Vote for the current game's three stars.")
                         .addOptions(playersOne, playersTwo, playersThree),
+
                 Commands.slash("stars", "View the stars for a game.")
                         .addOptions(
                                 new OptionData(OptionType.STRING, "date", "Enter the date for the score (format: yyyy/MM/dd)", false)
 
                         )
+
+
 
 
         ).queue();
@@ -131,7 +142,7 @@ public class BotMain {
                 }
 
                 // Add players to options
-                for (int i = 0; i < 25; i++) {
+                for (int i = 0; i < allPlayers.size(); i++) {
                     JsonObject player = allPlayers.get(i).getAsJsonObject();
                     String firstname = player.getAsJsonObject("firstName").get("default").getAsString();
                     String lastName = player.getAsJsonObject("lastName").get("default").getAsString();

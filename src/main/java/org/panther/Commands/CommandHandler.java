@@ -1,8 +1,10 @@
 package org.panther.Commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.Command;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -23,8 +25,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class CommandHandler extends ListenerAdapter {
 
@@ -38,7 +44,7 @@ public class CommandHandler extends ListenerAdapter {
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
         String commandName = event.getName();
-        System.out.println("Command");
+        System.out.println("Command: " + event.getName());
 
         switch (commandName) {
             case "ping" -> handlePing(event);
@@ -137,6 +143,52 @@ public class CommandHandler extends ListenerAdapter {
 
 
     }
+
+    @Override
+    public void onCommandAutoCompleteInteraction(@NotNull CommandAutoCompleteInteractionEvent event) {
+        //System.out.println("looking for autocomplete options");
+        //System.out.println("Command string is: " + event.getCommandString());
+        if (event.getCommandString().startsWith("/stats player:") || event.getCommandString().startsWith("/vote")) { // Ensure the command path is correctly specified
+            //System.out.println("Checking autocomplete options for stats:player");
+            String input = event.getFocusedOption().getValue();
+
+            List<Command.Choice> choices = getPlayerChoices(input);
+            event.replyChoices(choices).queue(); // Remove unnecessary casting
+        }
+    }
+
+    private List<Command.Choice> getPlayerChoices(String input) {
+        List<String> playerNames = fetchPlayerNames(input);
+        return playerNames.stream()
+                .map(name -> new Command.Choice(name, name)) // Correctly map to new Choice objects
+                .collect(Collectors.toList());
+    }
+
+    private List<String> fetchPlayerNames(String input) {
+        List<String> names = new ArrayList<>();
+        // Adjust the SQL query to concatenate first_name and last_name
+        String sql = "SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM players WHERE first_name LIKE ? OR last_name LIKE ? LIMIT 25";
+
+        try (Connection conn = Database.getConnection()) {
+            assert conn != null;
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                // Setting the same input for both first_name and last_name to be included in the search
+                stmt.setString(1, input + "%");
+                stmt.setString(2, input + "%");
+
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    // Fetching the concatenated full name
+                    names.add(rs.getString("full_name"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return names;
+    }
+
 
 
 
