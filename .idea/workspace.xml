@@ -383,6 +383,7 @@
     <MESSAGE value="fixed voting system to work with new databse schema" />
     <MESSAGE value="Fixed star voting and added overall vote tally" />
     <MESSAGE value="Small cleanup" />
-    <option name="LAST_COMMIT_MESSAGE" value="Small cleanup" />
+    <MESSAGE value="Revert &quot;fixed player DB&quot;&#10;&#10;This reverts commit 0fd598943f0230e4d9ad7452e4f2d6202a6d42dd.&#10;&#10; Conflicts:&#10;&#9;.idea/workspace.xml&#10;&#9;src/main/java/org/panther/BotMain.java&#10;&#9;src/main/java/org/panther/Commands/Votes/Votes.java&#10;&#9;src/main/java/org/panther/Database.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="Revert &quot;fixed player DB&quot;&#10;&#10;This reverts commit 0fd598943f0230e4d9ad7452e4f2d6202a6d42dd.&#10;&#10; Conflicts:&#10;&#9;.idea/workspace.xml&#10;&#9;src/main/java/org/panther/BotMain.java&#10;&#9;src/main/java/org/panther/Commands/Votes/Votes.java&#10;&#9;src/main/java/org/panther/Database.java" />
   </component>
 </project>
