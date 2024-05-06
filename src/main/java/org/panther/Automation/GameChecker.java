@@ -81,6 +81,7 @@ public class GameChecker {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(url).build();
         GameInfo currentGame = new GameInfo();
+        String testDate = "2024-05-12";
 
         try   {
             Response response = client.newCall(request).execute();
@@ -93,7 +94,7 @@ public class GameChecker {
                 for (JsonElement element : gamesByDate) {
                     JsonObject dateObject = element.getAsJsonObject();
                     String date = dateObject.get("date").getAsString();
-                    if (currentDate.equals(date)) {
+                    if (testDate.equals(date)) {
                         JsonArray games = dateObject.getAsJsonArray("games");
                         if (games.size() > 0) {
                             JsonObject game = games.get(0).getAsJsonObject();
@@ -171,10 +172,11 @@ public class GameChecker {
     private void createDataEntry(GameInfo currentGame)   {
         String sql = "INSERT INTO games (game_date, description) VALUES (?, ?)";
         int dateInt = Integer.parseInt(DateTimeUtils.dateFromCurrentDay().replaceAll("-",""));
+        int testInt = 20240512;
 
         try(Connection conn = Database.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql))   {
-                pstmt.setInt(1, dateInt);
+                pstmt.setInt(1, testInt);
                 pstmt.setString(2, currentGame.getAwayTeam() + " VS " + currentGame.getHomeTeam());
 
                 pstmt.executeUpdate();
@@ -221,12 +223,14 @@ public class GameChecker {
             System.err.println("Error sending message: " + throwable.getMessage());
         });
 
+        System.out.println("Preparing update pattern");
         sendUpdatedThreeStarsMessage(currentGame, activeThread);
 
 
     }
 
     private void sendUpdatedThreeStarsMessage(GameInfo currentGame, ThreadChannel activeThread) {
+        System.out.println("Updating three stars!");
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("Current Three Stars");
         embedBuilder.setDescription("No stars yet!");
@@ -239,7 +243,7 @@ public class GameChecker {
             Runnable updateTask = () -> updateThreeStarsMessage(message, currentGame);
             // Schedule the task to run every 5 minutes for 24 hours (288 times total)
             int delay = 0;
-            int period = 60;
+            int period = 10;
             int totalRuns = 600; // 24 hours * 60 minutes / 5 minutes
             for (int i = 0; i < totalRuns; i++) {
                 scheduler.schedule(updateTask, delay + period * i, TimeUnit.SECONDS);
@@ -281,30 +285,24 @@ public class GameChecker {
 
     public List<PlayerVoteCount> getTopThreeStarsForMostRecentGame() {
         List<PlayerVoteCount> topThreeStars = new ArrayList<>();
-        // Adjust this SQL to join with the games table and order by game date or ID to find the most recent game
-        String sql = "SELECT p.name, vs.vote_count " +
+        String sql = "SELECT CONCAT(p.first_name, ' ', p.last_name) AS full_name, vs.vote_count " +
                 "FROM vote_summary vs " +
                 "JOIN players p ON vs.player_id = p.id " +
                 "JOIN games g ON vs.game_id = g.id " +
-                "ORDER BY g.id DESC, vs.vote_count DESC " +
+                "WHERE g.game_date = (SELECT MAX(game_date) FROM games) " +
+                "ORDER BY vs.vote_count DESC " +
                 "LIMIT 3";
 
         try (Connection conn = Database.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            // No need to set the game ID parameter anymore
-
             try (ResultSet rs = pstmt.executeQuery()) {
-                // We assume the query already orders by the most recent game and gets the top 3 votes
-                // Just fetch the results as before
                 while (rs.next()) {
-                    String playerName = rs.getString("name");
+                    String playerName = rs.getString("full_name");
                     int voteCount = rs.getInt("vote_count");
                     topThreeStars.add(new PlayerVoteCount(playerName, voteCount));
                 }
             }
         } catch (SQLException e) {
-
-
             e.printStackTrace();
         }
 

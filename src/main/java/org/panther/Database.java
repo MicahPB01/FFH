@@ -10,10 +10,10 @@ public class Database {
     public static Connection getConnection() {
         try {
             // Check if the connection is null or closed
-            System.out.println("Attempting to connect to database");
+            //System.out.println("Attempting to connect to database");
             if (connection == null || connection.isClosed()) {
-                String url = "jdbc:mysql://localhost:3306/flyingfluffypanthers"; // host computer
-                //String url = "jdbc:mysql://localhost:3305/flyingfluffypanthers"; //  testing desktop server
+                //String url = "jdbc:mysql://localhost:3306/flyingfluffypanthers"; // host computer
+                String url = "jdbc:mysql://localhost:3305/flyingfluffypanthers"; //  testing desktop server
                 String user = "fluffy"; // Your database username
                 String password = "FFHFFFFFS"; // Your database password
 
@@ -21,7 +21,7 @@ public class Database {
 
                 connection = DriverManager.getConnection(url, user, password);
 
-                System.out.println("Connected to database");
+                //System.out.println("Connected to database");
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -106,7 +106,8 @@ public class BotMain {
                         .addOptions(
                                 new OptionData(OptionType.STRING, "date", "Enter the date for the score (format: yyyy/MM/dd)", false)
 
-                        )
+                        ),
+                Commands.slash("overall", "See the overall star tally across all games")
 
 
 
