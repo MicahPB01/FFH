@@ -31,7 +31,7 @@ public class BotMain {
     public static void main(String[] args) {
         try {
             // Replace "your-bot-token" with your actual bot token
-            JDA jda = JDABuilder.createDefault("")
+            JDA jda = JDABuilder.createDefault("MTE5MDE4MjczODQyNzQwMDMzNA.GXSqTf.8a9aHHEtk2ZGdV2bt875rdWqsiQ4X55g5YC2OE")
                     .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
                     .setActivity(Activity.customStatus("Vamos Gatos!"))
                     .enableCache(CacheFlag.VOICE_STATE)
@@ -46,6 +46,7 @@ public class BotMain {
 
 
             gameChecker.startGameCheckingScheduler();
+
 
 
             try   {
