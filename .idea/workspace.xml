@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="26ef9966-b7b7-4c65-9d5c-4cab3b4e30bc" name="Changes" comment="" />
+    <list default="true" id="26ef9966-b7b7-4c65-9d5c-4cab3b4e30bc" name="Changes" comment="Revert &quot;fixed player DB&quot;&#10;&#10;This reverts commit 0fd598943f0230e4d9ad7452e4f2d6202a6d42dd.&#10;&#10; Conflicts:&#10;&#9;.idea/workspace.xml&#10;&#9;src/main/java/org/panther/BotMain.java&#10;&#9;src/main/java/org/panther/Commands/Votes/Votes.java&#10;&#9;src/main/java/org/panther/Database.java">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/BotMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/BotMain.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -207,7 +210,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="3584d4fa-6646-4ec1-8080-044ce5ecaf8c" name="Changes" comment="" />
+      <changelist id="26ef9966-b7b7-4c65-9d5c-4cab3b4e30bc" name="Changes" comment="" />
       <created>1702755109513</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -360,7 +363,14 @@
       <option name="project" value="LOCAL" />
       <updated>1714979179540</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Revert &quot;fixed player DB&quot;&#10;&#10;This reverts commit 0fd598943f0230e4d9ad7452e4f2d6202a6d42dd.&#10;&#10; Conflicts:&#10;&#9;.idea/workspace.xml&#10;&#9;src/main/java/org/panther/BotMain.java&#10;&#9;src/main/java/org/panther/Commands/Votes/Votes.java&#10;&#9;src/main/java/org/panther/Database.java">
+      <created>1714981079145</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1714981079145</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
