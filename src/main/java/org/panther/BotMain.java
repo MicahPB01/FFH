@@ -30,7 +30,7 @@ public class BotMain {
     public static void main(String[] args) {
         try {
             // Replace "your-bot-token" with your actual bot token
-            JDA jda = JDABuilder.createDefault("MTE5MDE4MjczODQyNzQwMDMzNA.GUUIoR.Zzvj7ln3QBT0GH34TGLLjdKvSZM7F-K5hhyNDs")
+            JDA jda = JDABuilder.createDefault("")
                     .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
                     .setActivity(Activity.customStatus("Vamos Gatos!"))
                     .enableCache(CacheFlag.VOICE_STATE)
@@ -87,7 +87,8 @@ public class BotMain {
                         .addOptions(
                                 new OptionData(OptionType.STRING, "date", "Enter the date for the score (format: yyyy/MM/dd)", false)
 
-                        )
+                        ),
+                Commands.slash("overall", "View the top 10 players based on star votes.")
 
 
         ).queue();

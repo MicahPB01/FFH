@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3584d4fa-6646-4ec1-8080-044ce5ecaf8c" name="Changes" comment="Small cleanup" />
+    <list default="true" id="26ef9966-b7b7-4c65-9d5c-4cab3b4e30bc" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -96,7 +96,7 @@
       <recent name="org.DiscordBot" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.AvalancheDiscordBot [shadowJar]">
+  <component name="RunManager" selected="Gradle.AvalancheDiscordBot [build]">
     <configuration name="BotMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.panther.BotMain" />
       <module name="DiscordBot.main" />
@@ -196,8 +196,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.AvalancheDiscordBot [shadowJar]" />
         <item itemvalue="Gradle.AvalancheDiscordBot [build]" />
+        <item itemvalue="Gradle.AvalancheDiscordBot [shadowJar]" />
         <item itemvalue="Application.BotMain" />
         <item itemvalue="Gradle.AvalancheDiscordBot [jar]" />
         <item itemvalue="Gradle.AvalancheDiscordBot [clean]" />
