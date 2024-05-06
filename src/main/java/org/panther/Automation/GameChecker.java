@@ -94,7 +94,7 @@ public class GameChecker {
                 for (JsonElement element : gamesByDate) {
                     JsonObject dateObject = element.getAsJsonObject();
                     String date = dateObject.get("date").getAsString();
-                    if (testDate.equals(date)) {
+                    if (currentDate.equals(date)) {
                         JsonArray games = dateObject.getAsJsonArray("games");
                         if (games.size() > 0) {
                             JsonObject game = games.get(0).getAsJsonObject();
@@ -176,7 +176,7 @@ public class GameChecker {
 
         try(Connection conn = Database.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql))   {
-                pstmt.setInt(1, testInt);
+                pstmt.setInt(1, dateInt);
                 pstmt.setString(2, currentGame.getAwayTeam() + " VS " + currentGame.getHomeTeam());
 
                 pstmt.executeUpdate();

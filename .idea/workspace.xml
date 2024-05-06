@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3584d4fa-6646-4ec1-8080-044ce5ecaf8c" name="Changes" comment="fixed voting system to work with new databse schema">
+    <list default="true" id="3584d4fa-6646-4ec1-8080-044ce5ecaf8c" name="Changes" comment="Fixed star voting and added overall vote tally">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Automation/GameChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Automation/GameChecker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/BotMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/BotMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Commands/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Commands/CommandHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Database.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -92,7 +91,7 @@
       <recent name="org.DiscordBot" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.BotMain">
+  <component name="RunManager" selected="Gradle.AvalancheDiscordBot [shadowJar]">
     <configuration name="BotMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.panther.BotMain" />
       <module name="DiscordBot.main" />
@@ -192,8 +191,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.AvalancheDiscordBot [build]" />
         <item itemvalue="Gradle.AvalancheDiscordBot [shadowJar]" />
+        <item itemvalue="Gradle.AvalancheDiscordBot [build]" />
         <item itemvalue="Application.BotMain" />
         <item itemvalue="Gradle.AvalancheDiscordBot [jar]" />
         <item itemvalue="Gradle.AvalancheDiscordBot [clean]" />
@@ -321,7 +320,14 @@
       <option name="project" value="LOCAL" />
       <updated>1714795899239</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Fixed star voting and added overall vote tally">
+      <created>1714977127190</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1714977127190</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -347,6 +353,7 @@
     <MESSAGE value="fixed player DB" />
     <MESSAGE value="updated sql schema" />
     <MESSAGE value="fixed voting system to work with new databse schema" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed voting system to work with new databse schema" />
+    <MESSAGE value="Fixed star voting and added overall vote tally" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed star voting and added overall vote tally" />
   </component>
 </project>
