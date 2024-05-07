@@ -1,8 +1,7 @@
 package org.panther.Utilities;
 
 import com.google.gson.JsonObject;
-import org.jsoup.nodes.Document;
-import org.panther.Commands.Score.GameInfo;
+import org.panther.Models.GameInfo;
 
 import java.io.IOException;
 
@@ -21,27 +20,15 @@ public class GameBuilderUtils {
         currentGame.setHomeTeamLogo(game.getAsJsonObject("homeTeam").get("logo").getAsString());
         currentGame.setAwayTeamLogo(game.getAsJsonObject("awayTeam").get("logo").getAsString());
 
+        if(game.has("clock"))   {
+            currentGame.setHomeScore(game.getAsJsonObject("homeTeam").get("score").getAsString());
+            currentGame.setAwayScore(game.getAsJsonObject("awayTeam").get("score").getAsString());
+        }
 
         return currentGame;
 
-
-
     }
 
-
-
-    //create the URL to be used for data scraping
-    public static String findUrl(String date)   {
-        return "https://moneypuck.com/moneypuck/dates/" + date + ".htm";
-    }
-
-
-
-    public static boolean checkForGame(Document webScrape) {
-
-        return webScrape.toString().contains("FLORIDA PANTHERS");
-
-    }
 
 
 

@@ -24,4 +24,9 @@ public class DataFetcher {
         assert response.body() != null;
         return response.body().string();
     }
+
+
+
+
+
 }

@@ -1,4 +1,4 @@
-package org.panther.Commands.Score;
+package org.panther.Models;
 
 public class GameInfo {
     private String homeTeam;
@@ -8,6 +8,8 @@ public class GameInfo {
     private String score;
     private String time;
     private String date;
+    private String homeScore;
+    private String awayScore;
 
 
 
@@ -66,6 +68,19 @@ public class GameInfo {
         this.date = date;
     }
 
+    public String getHomeScore()   {
+        return homeScore;
+    }
 
+    public void setHomeScore(String homeScore) {
+        this.homeScore = homeScore;
+    }
 
+    public void setAwayScore(String awayScore) {
+        this.awayScore = awayScore;
+    }
+
+    public String getAwayScore() {
+        return awayScore;
+    }
 }

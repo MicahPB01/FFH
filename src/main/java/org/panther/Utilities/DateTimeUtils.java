@@ -2,10 +2,12 @@ package org.panther.Utilities;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,8 +31,8 @@ public class DateTimeUtils {
         System.out.println(date);
 
         String year = date.substring(0,4);
-        String month = date.substring(4,6);
-        String day = date.substring(6,8);
+        String month = date.substring(5,7);
+        String day = date.substring(8,10);
 
         return month + "/" + day + "/" + year;
 
@@ -54,7 +56,16 @@ public class DateTimeUtils {
     }
 
     public static String dateFromCommand(String dateFromCommand)   {
-        return dateFromCommand.replaceAll("/", "");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        try   {
+            LocalDate.parse(dateFromCommand, formatter);
+            return dateFromCommand;
+        }
+        catch(DateTimeParseException e)   {
+            return "invalid";
+        }
+
     }
 
     public static String dateFromCurrentDay()   {

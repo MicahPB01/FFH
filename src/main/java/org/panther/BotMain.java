@@ -91,9 +91,9 @@ public class BotMain {
         jda.updateCommands().addCommands(
                 Commands.slash("ping", "Test the bot's response time!"),
 
-                Commands.slash("score", "Get the score of the most recent Panthers Game!")
+                Commands.slash("score", "Get the score of Panthers Game!")
                         .addOptions(
-                                new OptionData(OptionType.STRING, "date", "Enter the date for the score (format: yyyy/MM/dd)", false)
+                                new OptionData(OptionType.STRING, "date", "Enter the date for the score (format: yyyy-MM-dd)", false)
                                 // false at the end signifies that this argument is optional
                         ),
 

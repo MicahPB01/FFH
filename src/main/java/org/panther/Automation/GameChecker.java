@@ -16,7 +16,7 @@ import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.panther.Commands.Score.GameInfo;
+import org.panther.Models.GameInfo;
 import org.panther.Database;
 import org.panther.Models.PlayerVoteCount;
 import org.panther.Utilities.DateTimeUtils;
@@ -30,7 +30,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.*;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -243,7 +242,7 @@ public class GameChecker {
             Runnable updateTask = () -> updateThreeStarsMessage(message, currentGame);
             // Schedule the task to run every 5 minutes for 24 hours (288 times total)
             int delay = 0;
-            int period = 10;
+            int period = 30;
             int totalRuns = 600; // 24 hours * 60 minutes / 5 minutes
             for (int i = 0; i < totalRuns; i++) {
                 scheduler.schedule(updateTask, delay + period * i, TimeUnit.SECONDS);
@@ -266,7 +265,7 @@ public class GameChecker {
         if (!topThreeStars.isEmpty()) {
             for (int i = 0; i < topThreeStars.size(); i++) {
                 PlayerVoteCount star = topThreeStars.get(i);
-                updatedEmbed.addField((i + 1) + " Star", star.getPlayerName() + " - Votes: " + star.getVoteCount(), false);
+                updatedEmbed.addField((i + 1) + " Star", star.playerName() + " - Votes: " + star.voteCount(), false);
             }
         }
 

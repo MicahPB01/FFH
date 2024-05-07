@@ -10,9 +10,6 @@ import net.dv8tion.jda.api.interactions.commands.Command;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
 import org.jetbrains.annotations.NotNull;
 import org.panther.Commands.Score.Score;
 import org.panther.Commands.Votes.Votes;
@@ -20,22 +17,14 @@ import org.panther.Database;
 import org.panther.Models.PlayerVoteCount;
 
 import java.awt.*;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class CommandHandler extends ListenerAdapter {
@@ -213,7 +202,7 @@ public class CommandHandler extends ListenerAdapter {
             embed.setTitle("Top 10 Players by Votes");
             embed.setColor(Color.RED);
             for(PlayerVoteCount player : topPlayers)   {
-                embed.addField(player.getPlayerName(), "Total Votes: " + player.getVoteCount(), false);
+                embed.addField(player.playerName(), "Total Votes: " + player.voteCount(), false);
             }
             event.replyEmbeds(embed.build()).queue();
         }
@@ -246,13 +235,4 @@ public class CommandHandler extends ListenerAdapter {
 
 
 
-
-
-
-
-
-
-
-
-    // Add other command handling methods here
 }
