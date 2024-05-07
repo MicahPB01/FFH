@@ -19,9 +19,9 @@ import okhttp3.Response;
 import org.panther.Models.GameInfo;
 import org.panther.Database;
 import org.panther.Models.PlayerVoteCount;
+import org.panther.Utilities.AppLogger;
 import org.panther.Utilities.DateTimeUtils;
 import org.panther.Utilities.GameBuilderUtils;
-import org.panther.Utilities.GameBuilderUtilsOld;
 
 import java.awt.*;
 import java.io.IOException;
@@ -35,10 +35,12 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 public class GameChecker {
     private final JDA jda;
     private static final ZoneId EST_ZONE_ID = ZoneId.of("America/New_York");
+    private static final Logger LOGGER = AppLogger.getLogger();
     private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
     public GameChecker(JDA jda) {
@@ -136,7 +138,7 @@ public class GameChecker {
            sendForumMessage(currentGame, activeThread);
         }
         else   {
-            System.out.println("Could not find channel");
+            LOGGER.warning("Could not find channel for gameday thread");
         }
 
 
@@ -146,13 +148,13 @@ public class GameChecker {
         if (channel != null) {
             channel.createThreadChannel(currentGame.getAwayTeam() + " VS " + currentGame.getHomeTeam()).queue();
         } else {
-            System.out.println("Channel not found.");
+            LOGGER.warning("Could not find channel for thread");
         }
     }
 
     private String buildThreadName(GameInfo currentGame)   {
 
-        String opponent = GameBuilderUtilsOld.determineOpponent(currentGame);
+        String opponent = GameBuilderUtils.determineOpponent(currentGame);
 
         return opponent + " | " + currentGame.getTime() + " | " + currentGame.getDate();
 
@@ -179,11 +181,11 @@ public class GameChecker {
                 pstmt.setString(2, currentGame.getAwayTeam() + " VS " + currentGame.getHomeTeam());
 
                 pstmt.executeUpdate();
-            System.out.println("Added game to database");
+            LOGGER.info("New game inserted into database: " + currentGame.getHomeTeam() + " " + currentGame.getAwayTeam());
             }
 
         catch(SQLException e)   {
-            System.out.println(e.getMessage());
+            LOGGER.severe(e.getMessage());
         }
 
     }
@@ -222,14 +224,14 @@ public class GameChecker {
             System.err.println("Error sending message: " + throwable.getMessage());
         });
 
-        System.out.println("Preparing update pattern");
+        LOGGER.fine("Starting updates for three stars");
         sendUpdatedThreeStarsMessage(currentGame, activeThread);
 
 
     }
 
     private void sendUpdatedThreeStarsMessage(GameInfo currentGame, ThreadChannel activeThread) {
-        System.out.println("Updating three stars!");
+        LOGGER.fine("Updating three stars");
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("Current Three Stars");
         embedBuilder.setDescription("No stars yet!");
@@ -302,7 +304,7 @@ public class GameChecker {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.severe(e.getMessage());
         }
 
         return topThreeStars;

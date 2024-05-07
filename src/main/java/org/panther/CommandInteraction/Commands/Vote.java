@@ -1,7 +1,9 @@
-package org.panther.Commands.Votes;
+package org.panther.CommandInteraction.Commands;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import org.panther.CommandInteraction.Command;
 import org.panther.Database;
+import org.panther.Utilities.AppLogger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,10 +11,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Logger;
 
-public class Votes {
+public class Vote implements Command {
+    private static final Logger LOGGER = AppLogger.getLogger();
 
-    public static void handleVoteStars(SlashCommandInteractionEvent event) {
+    @Override
+    public void execute(SlashCommandInteractionEvent event) {
+        LOGGER.fine("Tallying votes");
+
         String firstStar = Objects.requireNonNull(event.getOption("firststar")).getAsString();
         String secondStar = Objects.requireNonNull(event.getOption("secondstar")).getAsString();
         String thirdStar = Objects.requireNonNull(event.getOption("thirdstar")).getAsString();
@@ -22,9 +29,13 @@ public class Votes {
         processVote(gameID, firstStar, secondStar, thirdStar);
 
         event.reply("Your votes have been tallied!").queue();
+
     }
 
+
+
     private static void processVote(int gameID, String firstStar, String secondStar, String thirdStar) {
+        LOGGER.fine("processing vote");
         Map<String, Integer> stars = Map.of(
                 firstStar, 3,
                 secondStar, 2,
@@ -42,6 +53,7 @@ public class Votes {
     }
 
     private static int findMostRecentGameID() {
+        LOGGER.fine("Getting most recent game ID");
         String sql = "SELECT id FROM games ORDER BY id DESC LIMIT 1";
         try (Connection conn = Database.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -52,6 +64,7 @@ public class Votes {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        LOGGER.warning("Most recent game not found. Unable to tally votes");
         return -1; // Indicates not found
     }
 
@@ -65,11 +78,12 @@ public class Votes {
             pstmt.setInt(3, points);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.severe(e.toString());
         }
     }
 
     private static int findPlayerIDByName(String fullName) {
+        LOGGER.fine("Getting player id from name");
         String[] names = fullName.split(" ", 2);  // Assumes name is in "First Last" format
         String sql = "SELECT id FROM players WHERE first_name = ? AND last_name = ? LIMIT 1";
         try (Connection conn = Database.getConnection();
@@ -81,8 +95,11 @@ public class Votes {
                 return rs.getInt("id");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.severe(e.toString());
         }
+        LOGGER.warning("Could not find player name");
         return -1; // Indicates not found
     }
+
+
 }

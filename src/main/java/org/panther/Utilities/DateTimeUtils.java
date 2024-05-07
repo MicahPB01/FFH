@@ -2,37 +2,31 @@ package org.panther.Utilities;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.Objects;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DateTimeUtils {
+    private static final Logger LOGGER = AppLogger.getLogger();
 
-    public static String findTime(String time)   {
-        System.out.println(time);
-        Pattern pattern = Pattern.compile("\\d.*?ET");
-        Matcher matcher = pattern.matcher(time);
-
-        if (matcher.find()) {
-            time = matcher.group(0);
-            return time;
-        }
-
-        return "Couldn't find time";
-    }
 
     public static String reverseDate(String date)   {
-        System.out.println(date);
+
 
         String year = date.substring(0,4);
         String month = date.substring(5,7);
         String day = date.substring(8,10);
+
+        LOGGER.fine("Reversing date: " + date + " to : " + month + "/" + day + "/" + year);
 
         return month + "/" + day + "/" + year;
 
@@ -40,6 +34,7 @@ public class DateTimeUtils {
 
     //Find the date for the requested game score or info
     public static String findDate(SlashCommandInteractionEvent event)   {
+        LOGGER.fine("Grabbing date");
         String date;
 
         //if a date is provided, grab the included date, otherwise the date will be set as the current date
@@ -63,12 +58,14 @@ public class DateTimeUtils {
             return dateFromCommand;
         }
         catch(DateTimeParseException e)   {
+            LOGGER.warning("Invalid date provided from");
             return "invalid";
         }
 
     }
 
     public static String dateFromCurrentDay()   {
+        LOGGER.fine("getting the date from the current day");
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -76,6 +73,7 @@ public class DateTimeUtils {
     }
 
     public static String convertUTCtoET(String UTCTime) {
+        LOGGER.fine("Converting UTC to ET");
         ZonedDateTime startTimeUTC = ZonedDateTime.parse(UTCTime);
         ZonedDateTime startTimeET = startTimeUTC.withZoneSameInstant(ZoneId.of("America/New_York"));
 
@@ -83,10 +81,15 @@ public class DateTimeUtils {
     }
 
     public static String removeDateDash(String date)   {
+        LOGGER.fine("Removing - from " + date);
         return date.replaceAll("-","");
     }
 
 
-
+    public static String calcDate(long millisecs) {
+        SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date resultdate = new Date(millisecs);
+        return date_format.format(resultdate);
+    }
 
 }

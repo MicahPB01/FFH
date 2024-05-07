@@ -1,4 +1,4 @@
-package org.panther.Commands.Score;
+package org.panther.CommandInteraction.Commands;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -8,25 +8,29 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.panther.Commands.Command;
+import org.panther.CommandInteraction.Command;
 import org.panther.Models.GameInfo;
+import org.panther.Utilities.AppLogger;
 import org.panther.Utilities.DateTimeUtils;
 import org.panther.Utilities.GameBuilderUtils;
 
 import java.awt.*;
 import java.io.IOException;
 import java.time.Instant;
+import java.util.logging.Logger;
 
 public class Score implements Command {
-
+    private static final Logger LOGGER = AppLogger.getLogger();
 
     @Override
     public void execute(SlashCommandInteractionEvent event) {
-        System.out.println("looking for a game");
+        LOGGER.info("Attempting to find a game");
+
         String baseUrl = "https://api-web.nhle.com/v1/score/";
         String date = DateTimeUtils.findDate(event);
 
-        if(date.equals("invalid"))   {
+        if (date.equals("invalid")) {
+            LOGGER.warning("Invalid date format received: " + date);
             event.reply("Invalid Date. Please ensure its formatted as yyyy-MM-dd").queue();
             return;
         }
@@ -36,62 +40,64 @@ public class Score implements Command {
         Request request = new Request.Builder().url(fullUrl).build();
         GameInfo newGame = new GameInfo();
 
-        try   {
-            System.out.println("found games, looking for panthers");
+        try {
+            LOGGER.fine("Sending request to URL: " + fullUrl);
             Response response = client.newCall(request).execute();
 
-            if(response.isSuccessful() && response.body() != null)   {
+            if (response.isSuccessful() && response.body() != null) {
                 String responseBody = response.body().string();
                 JsonObject jsonObject = JsonParser.parseString(responseBody).getAsJsonObject();
                 JsonArray games = jsonObject.getAsJsonArray("games");
 
-                for(int i = 0; i < games.size(); i++)   {
+                boolean gameFound = false;
+                for (int i = 0; i < games.size(); i++) {
                     JsonObject game = games.get(i).getAsJsonObject();
                     JsonObject homeTeam = game.getAsJsonObject("homeTeam");
                     JsonObject awayTeam = game.getAsJsonObject("awayTeam");
 
-                    if(homeTeam.get("abbrev").getAsString().equals("FLA") || awayTeam.get("abbrev").getAsString().equals("FLA"))   {
-                        System.out.println("Found Florida, creating game info");
+                    if (homeTeam.get("abbrev").getAsString().equals("FLA") || awayTeam.get("abbrev").getAsString().equals("FLA")) {
+                        LOGGER.fine("Florida Panthers game found, processing game info");
                         newGame = GameBuilderUtils.findGameInfo(game);
                         sendResult(newGame, event);
-                        return;
+                        gameFound = true;
+                        break;
                     }
-
                 }
-                event.reply("No game Today!").queue();
 
+                if (!gameFound) {
+                    LOGGER.fine("No Florida Panthers game found on the specified date: " + date);
+                    event.reply("No game Today!").queue();
+                }
+            } else {
+                LOGGER.severe("Failed to retrieve game information. HTTP response not successful.");
             }
+        } catch (IOException e) {
+            LOGGER.severe("IOException occurred while fetching game data: " + e.getMessage());
         }
-        catch (IOException ignored)   {
-
-        }
-
-
     }
-    private void sendResult(GameInfo currentGame, SlashCommandInteractionEvent event)   {
-        System.out.println("Sending game");
+
+    private void sendResult(GameInfo currentGame, SlashCommandInteractionEvent event) {
+        LOGGER.info("Preparing to send game details");
 
         if (currentGame != null) {
             EmbedBuilder embedBuilder = new EmbedBuilder();
             embedBuilder.setTitle("Game Details");
             embedBuilder.addField("Home: ", currentGame.getHomeTeam(), true);
-            embedBuilder.addField("Away: " , currentGame.getAwayTeam(), true);
+            embedBuilder.addField("Away: ", currentGame.getAwayTeam(), true);
 
-
-            if(currentGame.getHomeScore() != null) {
+            if (currentGame.getHomeScore() != null) {
                 embedBuilder.addField("Score: ", currentGame.getAwayTeam() + " - " + currentGame.getAwayScore() + " : " + currentGame.getHomeScore() + " - " + currentGame.getHomeTeam(), false);
+            } else {
+                embedBuilder.addField("Time: ", currentGame.getTime(), false);
             }
-            else   {
-                embedBuilder.addField("Time: " , currentGame.getTime(), false);
-            }
-
 
             embedBuilder.addField("Date: ", DateTimeUtils.reverseDate(currentGame.getDate()), true);
-            embedBuilder.setColor(Color.red);
+            embedBuilder.setColor(Color.RED);
             embedBuilder.setFooter("Game Information", null);
             embedBuilder.setTimestamp(Instant.now());
             event.replyEmbeds(embedBuilder.build()).queue();
+        } else {
+            LOGGER.warning("No game information available to send");
         }
-
     }
 }

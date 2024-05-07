@@ -4,10 +4,14 @@ import com.google.gson.JsonObject;
 import org.panther.Models.GameInfo;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class GameBuilderUtils {
+    private static final Logger LOGGER = AppLogger.getLogger();
+
 
     public static GameInfo findGameInfo(JsonObject game) throws IOException {
+        LOGGER.fine("Creating the game");
 
         GameInfo currentGame = new GameInfo();
 
@@ -24,8 +28,18 @@ public class GameBuilderUtils {
             currentGame.setHomeScore(game.getAsJsonObject("homeTeam").get("score").getAsString());
             currentGame.setAwayScore(game.getAsJsonObject("awayTeam").get("score").getAsString());
         }
-
+        LOGGER.fine("Game created, returning");
         return currentGame;
+    }
+
+    public static String determineOpponent(GameInfo currentGame)   {
+
+        if (currentGame.getHomeTeam().contains("Florida Panthers")) {
+            return currentGame.getAwayTeam();
+        }
+        else   {
+            return currentGame.getHomeTeam();
+        }
 
     }
 

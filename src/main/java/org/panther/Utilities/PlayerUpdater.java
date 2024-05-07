@@ -10,10 +10,16 @@ import org.panther.Database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class PlayerUpdater {
+    private static final Logger LOGGER = AppLogger.getLogger();
+
 
     public static void updateDatabase(String jsonData)   {
+
+
+
         JSONObject obj = new JSONObject(jsonData);
         JSONArray forwards = obj.getJSONArray("forwards");
         JSONArray defensemen = obj.getJSONArray("defensemen");
@@ -82,7 +88,7 @@ public class PlayerUpdater {
 
         }
 
-
+        LOGGER.info("Player Table updated");
 
     }
 
@@ -93,7 +99,7 @@ public class PlayerUpdater {
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
                 "ON DUPLICATE KEY UPDATE id = id;";
 
-        System.out.println("Inserting " + firstName + " " + lastName);
+        LOGGER.fine("Inserting " + firstName + " " + lastName);
 
         try (Connection conn = Database.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
