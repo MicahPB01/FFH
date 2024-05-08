@@ -43,7 +43,19 @@ public class Stats implements Command {
             // Extract stats for regular season and playoffs
             JsonObject featuredStats = jsonObject.getAsJsonObject("featuredStats");
             JsonObject regularSeasonStats = featuredStats.getAsJsonObject("regularSeason").getAsJsonObject("subSeason");
-            JsonObject playoffStats = featuredStats.getAsJsonObject("playoffs").getAsJsonObject("subSeason");
+
+
+            JsonObject playoffStats = new JsonObject();
+
+            if(featuredStats.has("playoff"))   {
+                playoffStats = featuredStats.getAsJsonObject("playoffs").getAsJsonObject("subSeason");
+            }
+            else   {
+                playoffStats.addProperty("goals", 0);
+                playoffStats.addProperty("assists", 0);
+                playoffStats.addProperty("gamesPlayed", 0);
+                LOGGER.fine("No playoff stats found, setting stats for playoffs at 0");
+            }
 
             // Calculate combined stats
             int combinedGoals = regularSeasonStats.get("goals").getAsInt() + playoffStats.get("goals").getAsInt();
@@ -71,7 +83,7 @@ public class Stats implements Command {
 
             event.replyEmbeds(embedBuilder.build()).queue();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.severe(e.getMessage());
             event.reply("Failed to fetch player stats.").setEphemeral(true).queue();
         }
 
@@ -92,7 +104,7 @@ public class Stats implements Command {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.severe(e.getMessage());
         }
         return -1; // Indicates not found
     }

@@ -102,8 +102,10 @@ public class GameChecker {
 
                             currentGame = GameBuilderUtils.findGameInfo(game);
 
+                            LOGGER.fine("Creating game threads and created game for database");
                             createGameDayThread(currentGame);
                             createDataEntry(currentGame);
+
 
                         }
                     }
@@ -111,7 +113,7 @@ public class GameChecker {
             }
 
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            LOGGER.severe(e.getMessage());
         }
 
 
@@ -245,7 +247,7 @@ public class GameChecker {
             // Schedule the task to run every 5 minutes for 24 hours (288 times total)
             int delay = 0;
             int period = 30;
-            int totalRuns = 600; // 24 hours * 60 minutes / 5 minutes
+            int totalRuns = 2800; // 24 hours * 60 minutes / 5 minutes
             for (int i = 0; i < totalRuns; i++) {
                 scheduler.schedule(updateTask, delay + period * i, TimeUnit.SECONDS);
             }

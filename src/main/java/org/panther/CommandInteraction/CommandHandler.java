@@ -87,10 +87,10 @@ public class CommandHandler extends ListenerAdapter {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.severe(e.getMessage());
         }
 
-        LOGGER.info("Got player names");
+        LOGGER.fine("Got player names");
         return names;
     }
 

@@ -20,13 +20,18 @@ public class DateTimeUtils {
 
 
     public static String reverseDate(String date)   {
+        LOGGER.fine("Reversing date: " + date);
+
+        if(date.length() != 10)   {
+            LOGGER.warning("Received malformed date. Returning original string");
+            return date;
+        }
 
 
         String year = date.substring(0,4);
         String month = date.substring(5,7);
         String day = date.substring(8,10);
 
-        LOGGER.fine("Reversing date: " + date + " to : " + month + "/" + day + "/" + year);
 
         return month + "/" + day + "/" + year;
 

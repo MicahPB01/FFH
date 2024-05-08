@@ -52,7 +52,7 @@ public class BotMain {
                 PlayerUpdater.updateDatabase(jsonData);
             }
             catch (IOException | InterruptedException e)   {
-                e.printStackTrace();
+                LOGGER.severe(e.getMessage());
             }
 
             LOGGER.info("Bot Loaded!");
@@ -60,7 +60,7 @@ public class BotMain {
 
 
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            LOGGER.severe(e.getMessage());
         }
     }
 

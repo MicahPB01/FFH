@@ -122,7 +122,7 @@ public class PlayerUpdater {
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.severe(e.getMessage());
         }
 
 

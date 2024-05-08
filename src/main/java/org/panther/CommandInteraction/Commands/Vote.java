@@ -62,7 +62,7 @@ public class Vote implements Command {
                 return rs.getInt("id");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.severe(e.getMessage());
         }
         LOGGER.warning("Most recent game not found. Unable to tally votes");
         return -1; // Indicates not found
