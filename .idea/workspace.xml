@@ -4,17 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="26ef9966-b7b7-4c65-9d5c-4cab3b4e30bc" name="Changes" comment="Replaced old Score.java with new one. Continuing to migrate moneypuck to nhl api">
+    <list default="true" id="26ef9966-b7b7-4c65-9d5c-4cab3b4e30bc" name="Changes" comment="Updated logging messages. Fixed game insertion to database">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Automation/GameChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Automation/GameChecker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/BotMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/BotMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/CommandInteraction/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/CommandInteraction/CommandHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/CommandInteraction/Commands/Stats.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/CommandInteraction/Commands/Stats.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/CommandInteraction/Commands/Vote.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/CommandInteraction/Commands/Vote.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Utilities/AppLogger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Utilities/AppLogger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Utilities/DateTimeUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Utilities/DateTimeUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/panther/Utilities/PlayerUpdater.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/panther/Utilities/PlayerUpdater.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,8 +203,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.AvalancheDiscordBot [build]" />
-        <item itemvalue="Gradle.AvalancheDiscordBot [buildDependents]" />
         <item itemvalue="Gradle.AvalancheDiscordBot [shadowJar]" />
+        <item itemvalue="Gradle.AvalancheDiscordBot [buildDependents]" />
         <item itemvalue="Application.BotMain" />
         <item itemvalue="Gradle.AvalancheDiscordBot [jar]" />
       </list>
@@ -392,7 +387,14 @@
       <option name="project" value="LOCAL" />
       <updated>1715107765633</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Updated logging messages. Fixed game insertion to database">
+      <created>1715147748794</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1715147748794</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -423,6 +425,7 @@
     <MESSAGE value="Revert &quot;fixed player DB&quot;&#10;&#10;This reverts commit 0fd598943f0230e4d9ad7452e4f2d6202a6d42dd.&#10;&#10; Conflicts:&#10;&#9;.idea/workspace.xml&#10;&#9;src/main/java/org/panther/BotMain.java&#10;&#9;src/main/java/org/panther/Commands/Votes/Votes.java&#10;&#9;src/main/java/org/panther/Database.java" />
     <MESSAGE value="Github Shenanigans" />
     <MESSAGE value="Replaced old Score.java with new one. Continuing to migrate moneypuck to nhl api" />
-    <option name="LAST_COMMIT_MESSAGE" value="Replaced old Score.java with new one. Continuing to migrate moneypuck to nhl api" />
+    <MESSAGE value="Updated logging messages. Fixed game insertion to database" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated logging messages. Fixed game insertion to database" />
   </component>
 </project>

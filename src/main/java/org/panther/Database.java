@@ -17,8 +17,8 @@ public class Database {
             // Check if the connection is null or closed
             //System.out.println("Attempting to connect to database");
             if (connection == null || connection.isClosed()) {
-                //String url = "jdbc:mysql://localhost:3306/flyingfluffypanthers"; // host computer
-                String url = "jdbc:mysql://localhost:3305/flyingfluffypanthers"; //  testing desktop server
+                String url = "jdbc:mysql://localhost:3306/flyingfluffypanthers"; // host computer
+                //String url = "jdbc:mysql://localhost:3305/flyingfluffypanthers"; //  testing desktop server
                 String user = "fluffy"; // Your database username
                 String password = "FFHFFFFFS"; // Your database password
 

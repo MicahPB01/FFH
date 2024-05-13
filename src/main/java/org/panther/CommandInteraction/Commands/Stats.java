@@ -66,19 +66,18 @@ public class Stats implements Command {
             embedBuilder.setTitle(playerName + " - Season Overview");
             embedBuilder.setColor(Color.decode("#C8102E"));  // RED
             embedBuilder.setThumbnail(jsonObject.get("headshot").getAsString());
-            embedBuilder.addField("Team", jsonObject.getAsJsonObject("fullTeamName").get("default").getAsString(), false);  // Not inline to ensure it appears on its own line
+            embedBuilder.addField("Team", jsonObject.getAsJsonObject("fullTeamName").get("default").getAsString(), false);
 
-// Stats line
             embedBuilder.addField("Goals", String.valueOf(combinedGoals), true);
             embedBuilder.addField("Assists", String.valueOf(combinedAssists), true);
             embedBuilder.addField("Shoots/Catches", jsonObject.get("shootsCatches").getAsString(), true);
 
-// Physical attributes line
+
             embedBuilder.addField("Height", jsonObject.get("heightInInches").getAsInt() + " in", true);
             embedBuilder.addField("Weight", jsonObject.get("weightInPounds").getAsInt() + " lbs", true);
             embedBuilder.addField("Position", jsonObject.get("position").getAsString(), true);
 
-            embedBuilder.addField("Games Played", String.valueOf(combinedGamesPlayed), false);  // Not inline to ensure it appears on its own line
+            embedBuilder.addField("Games Played", String.valueOf(combinedGamesPlayed), false);
             embedBuilder.setFooter("Data includes Regular Season and Playoffs", null);
 
             event.replyEmbeds(embedBuilder.build()).queue();

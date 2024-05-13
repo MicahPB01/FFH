@@ -237,20 +237,31 @@ public class GameChecker {
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("Current Three Stars");
         embedBuilder.setDescription("No stars yet!");
-        // Initialize your embedBuilder with default or initial values
+        embedBuilder.setFooter("Voting for this game is currently open");
 
         // Send the initial message
         activeThread.sendMessageEmbeds(embedBuilder.build()).queue(message -> {
             // Schedule updates for this message
             ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
             Runnable updateTask = () -> updateThreeStarsMessage(message, currentGame);
-            // Schedule the task to run every 5 minutes for 24 hours (288 times total)
+
             int delay = 0;
             int period = 30;
-            int totalRuns = 2800; // 24 hours * 60 minutes / 5 minutes
+            int totalRuns = 2500; // Scheduling for an extended period, adjust as necessary
+
             for (int i = 0; i < totalRuns; i++) {
                 scheduler.schedule(updateTask, delay + period * i, TimeUnit.SECONDS);
             }
+
+            // Schedule the final update to change the footer after all updates
+            scheduler.schedule(() -> {
+                EmbedBuilder finalEmbedBuilder = new EmbedBuilder();
+                finalEmbedBuilder.setTitle("Current Three Stars");
+                finalEmbedBuilder.setDescription("Voting for this game has been closed");
+                message.editMessageEmbeds(finalEmbedBuilder.build()).queue();
+            }, delay + period * totalRuns, TimeUnit.SECONDS);
+
+            scheduler.shutdown();
         });
     }
 
@@ -264,6 +275,7 @@ public class GameChecker {
         updatedEmbed.setTitle(currentGame.getAwayTeam() + " VS " + currentGame.getHomeTeam() + " - Current Three Stars");
         updatedEmbed.setColor(Color.RED);
         updatedEmbed.setDescription(description); // Set initial description
+
 
         // Only add fields if there are stars to display
         if (!topThreeStars.isEmpty()) {
